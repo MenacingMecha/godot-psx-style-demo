@@ -12,6 +12,5 @@ func update_shadow(origin_position: Vector3, distance_from_ground: float) -> voi
 	# set shadow scale
 	var clamped_distance_from_ground = max(distance_from_ground * -1, max_distance_from_ground)
 	var distance_weight = min(distance_from_ground * -1 / max_distance_from_ground, 1)
-	print(distance_weight)
 	var scale_multiplier = lerp(scale_max, scale_min, distance_weight)
 	scale = Vector3(scale_multiplier, scale_multiplier, scale_multiplier)
