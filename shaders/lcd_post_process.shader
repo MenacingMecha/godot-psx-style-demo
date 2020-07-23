@@ -1,29 +1,35 @@
 shader_type canvas_item;
 
-uniform float rgb_intensity = 1;
-uniform float scanline_intensity = 0.25;
+uniform float opacity = 0.5;
+uniform int scanline_gap = 5;
+
+// http://theorangeduck.com/page/avoiding-shader-conditionals
+float when_eq(int x, int y)
+{
+    return 1.0 - abs(sign(float(x) - float(y)));
+}
+
+vec4 lcdColor(int pos_x, int pos_y)
+{
+    vec4 lcdColor = vec4(1);
+    // Change every 1st, 2nd, and 3rd vertical strip to RGB respectively
+	// if (px == 1) lcdColor.r = 1.0;
+    // else if (px == 2) lcdColor.g = 1.0;
+    // else lcdColor.b = 1.0;
+    lcdColor.r = lcdColor.r * when_eq(pos_x, 0);
+    lcdColor.g = lcdColor.g * when_eq(pos_x, 1);
+    lcdColor.b = lcdColor.b * when_eq(pos_x, 2);
+    
+    // Darken every 3rd horizontal strip for scanline
+    // if (int(mod(FRAGCOORD.y,3.0)) == 0) lcdColor.rgb = vec3(0);
+    lcdColor.rgb = lcdColor.rgb * vec3(1.0 - when_eq(pos_y, 0));
+
+    return lcdColor;
+}
 
 void fragment()
 {
-    // Get pos relative to 0-1 screen space
-    vec2 uv = FRAGCOORD.xy / (1.0 / SCREEN_PIXEL_SIZE);
-    
-    // Map texture to 0-1 space
-    vec4 texColor = texture(TEXTURE,uv);
-    
-    // Default lcd colour (affects brightness)
-    float pb = 0.4;
-    vec4 lcdColor = vec4(pb,pb,pb,1.0);
-    
-    // Change every 1st, 2nd, and 3rd vertical strip to RGB respectively
-    int px = int(mod(FRAGCOORD.x,3.0));
-	if (px == 1) lcdColor.r = 1.0;
-    else if (px == 2) lcdColor.g = 1.0;
-    else lcdColor.b = 1.0;
-    
-    // Darken every 3rd horizontal strip for scanline
-    float sclV = 0.25;
-    if (int(mod(FRAGCOORD.y,3.0)) == 0) lcdColor.rgb = vec3(scanline_intensity);
-    
-    COLOR = texColor * mix(vec4(1), lcdColor, rgb_intensity);
+    int pos_x = int(mod(FRAGCOORD.x, 3.0));
+    int pos_y = int(mod(FRAGCOORD.y, float(scanline_gap)));
+    COLOR = texture(TEXTURE,UV) * mix(vec4(1), lcdColor(pos_x, pos_y), opacity);
 }
