@@ -1,0 +1,92 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://spatial_sin_pan.gd" type="Script" id=1]
+[ext_resource path="res://orbit_camera.gd" type="Script" id=2]
+[ext_resource path="res://object_mat.tres" type="Material" id=3]
+[ext_resource path="res://floor.tres" type="Material" id=4]
+[ext_resource path="res://shadow.tscn" type="PackedScene" id=5]
+[ext_resource path="res://crystal.tscn" type="PackedScene" id=6]
+
+[sub_resource type="PlaneMesh" id=1]
+size = Vector2( 20, 20 )
+subdivide_width = 10
+subdivide_depth = 10
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 3.0314, 1, 1 )
+
+[sub_resource type="Environment" id=3]
+background_mode = 1
+ambient_light_color = Color( 1, 1, 1, 1 )
+fog_enabled = true
+fog_color = Color( 0.0588235, 0.0666667, 0.0745098, 1 )
+fog_depth_begin = 4.0
+fog_depth_end = 8.0
+dof_blur_near_distance = 10.37
+
+[node name="World" type="Spatial"]
+
+[node name="BoxObject" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.839492, 1.95543, 0.224841 )
+cast_shadow = 0
+width = 1.0
+height = 1.0
+depth = 1.0
+material = ExtResource( 3 )
+script = ExtResource( 1 )
+shadow_path = NodePath("../../World/BoxShadow")
+translation_speed = 2.0
+
+[node name="BoxShadow" parent="." instance=ExtResource( 5 )]
+
+[node name="Floor" type="MeshInstance" parent="."]
+mesh = SubResource( 1 )
+material/0 = ExtResource( 4 )
+
+[node name="FloorBody" type="StaticBody" parent="Floor"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Floor/FloorBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.993481, 0 )
+shape = SubResource( 2 )
+
+[node name="OrbitPoint" type="Spatial" parent="."]
+transform = Transform( 1, -3.72529e-09, 0, 0, 1, 0, 0, 0, 1, 0, -2.38419e-07, -4.76837e-07 )
+script = ExtResource( 2 )
+
+[node name="Camera" type="Camera" parent="OrbitPoint"]
+transform = Transform( 0.933862, -0.0527137, 0.353729, 0, 0.989078, 0.147395, -0.357635, -0.137647, 0.923662, 1.99246, 2.14704, 3.99422 )
+fov = 68.1243
+
+[node name="SphereObject" type="CSGSphere" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.957666, 1.86571, -0.163884 )
+cast_shadow = 0
+radius = 0.75
+radial_segments = 6
+rings = 3
+smooth_faces = false
+material = ExtResource( 3 )
+script = ExtResource( 1 )
+shadow_path = NodePath("../../World/BoxShadow2")
+translation_distance = -0.5
+translation_speed = 2.0
+
+[node name="BoxShadow2" parent="." instance=ExtResource( 5 )]
+transform = Transform( 3.2649, 0, 0, 0, -1.42713e-07, 1, 0, -3.2649, -4.37114e-08, 0.88818, 0, 0.225 )
+
+[node name="Crystal" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.340305, 0, 0, 0, 1, 0, 0, 0, 0.340305, -1.88025, 0.913742, 0.620915 )
+
+[node name="Crystal5" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.28803, 0, -0.181235, 0, 1, 0, 0.181235, 0, 0.28803, -0.820814, 0.913742, 2.07995 )
+
+[node name="Crystal2" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.277976, 0, 0.196308, 0, 1, 0, -0.196308, 0, 0.277976, 1.52818, 0.913742, 0.945921 )
+
+[node name="Crystal3" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.0380101, 0, 0.338176, 0, 1, 0, -0.338176, 0, 0.0380101, 1.67992, 0.913742, -0.924345 )
+
+[node name="Crystal4" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.0380101, 0, 0.338176, 0, 1, 0, -0.338176, 0, 0.0380101, -0.576337, 0.913742, -1.5931 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 3 )

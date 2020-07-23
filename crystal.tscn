@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://shadow.tscn" type="PackedScene" id=1]
+[ext_resource path="res://crystal.tres" type="Material" id=2]
+
+
+[node name="CSGSphere2" type="CSGSphere"]
+transform = Transform( 0.340305, 0, 0, 0, 1, 0, 0, 0, 0.340305, -0.511677, 0.913742, 1.40006 )
+radius = 0.75
+radial_segments = 6
+rings = 3
+smooth_faces = false
+material = ExtResource( 2 )
+
+[node name="CSGSphere3" type="CSGSphere" parent="."]
+transform = Transform( 0.733045, 1.65484, -0.381452, -0.170004, 0.826354, 0.0884643, 0.461609, -4.37878e-08, 0.887084, 0.752325, -0.204503, -0.003438 )
+radius = 0.75
+radial_segments = 6
+rings = 3
+smooth_faces = false
+material = ExtResource( 2 )
+
+[node name="CSGSphere4" type="CSGSphere" parent="CSGSphere3"]
+transform = Transform( 0.299413, -0.96395, 0.895958, 0.287973, 0.525084, -0.0308109, -0.440756, 2.3076, 0.434809, -0.0482205, -0.315293, 0.599363 )
+radius = 0.75
+radial_segments = 6
+rings = 3
+smooth_faces = false
+material = ExtResource( 2 )
+
+[node name="BoxShadow" parent="." instance=ExtResource( 1 )]
+transform = Transform( 7.03015, 0, 0, 0, -3.07297e-07, 0.999999, 0, -7.03015, -4.37113e-08, 0.197094, -0.878884, -0.0157309 )

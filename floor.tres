@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+
+[ext_resource path="res://Shaders/psx_lit.shader" type="Shader" id=1]
+[ext_resource path="res://floor.png" type="Texture" id=2]
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/color = Color( 0.592157, 0.631373, 0.729412, 1 )
+shader_param/specular_intensity = null
+shader_param/resolution = 128.0
+shader_param/cull_distance = 100.0
+shader_param/uv_scale = Vector2( 10, 10 )
+shader_param/uv_offset = Vector2( 0, 0 )
+shader_param/dither_resolution = Vector2( 32, 32 )
+shader_param/dither_intensity = 0.2
+shader_param/albedoTex = ExtResource( 2 )
