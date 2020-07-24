@@ -7,6 +7,7 @@ uniform vec2 uv_scale = vec2(1.0, 1.0);
 uniform vec2 uv_offset = vec2(.0, .0);
 uniform float vertex_resolution = 128;
 uniform float cull_distance = 50;
+uniform bool dither_enabled = true;
 uniform float dither_resolution = 1;
 uniform float dither_intensity = 0.03;
 uniform int color_depth = 15;
@@ -65,10 +66,17 @@ void vertex()
 void fragment()
 {
 	vec4 tex = texture(albedoTex, vertex_coordinates.xy / vertex_coordinates.z) * color;
-	const vec3 luminosity = vec3(.299, 0.587, 0.114);
-	float luma = dot(tex.rgb, luminosity);
 	vec4 banded_tex = band_color(tex, color_depth);
-	vec4 checker = vec4(vec3(dither4x4(vec2(dither_resolution) * FRAGCOORD.xy, luma)), 1);
-	ALBEDO = mix(banded_tex, checker, dither_intensity).rgb;
 	ALPHA = color.a;
+	if (dither_enabled)
+	{
+		const vec3 luminosity = vec3(.299, 0.587, 0.114);
+		float luma = dot(tex.rgb, luminosity);
+		vec4 checker = vec4(vec3(dither4x4(vec2(dither_resolution) * FRAGCOORD.xy, luma)), 1);
+		ALBEDO = mix(banded_tex, checker, dither_intensity).rgb;
+	}
+	else
+	{
+		ALBEDO = banded_tex.rgb;
+	}
 }

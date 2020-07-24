@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://spatial_sin_pan.gd" type="Script" id=1]
 [ext_resource path="res://orbit_camera.gd" type="Script" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://floor.tres" type="Material" id=4]
 [ext_resource path="res://shadow.tscn" type="PackedScene" id=5]
 [ext_resource path="res://crystal.tscn" type="PackedScene" id=6]
+[ext_resource path="res://toggle_dither.gd" type="Script" id=7]
+[ext_resource path="res://crystal.tres" type="Material" id=8]
 
 [sub_resource type="PlaneMesh" id=1]
 size = Vector2( 20, 20 )
@@ -90,3 +92,7 @@ transform = Transform( 0.0380101, 0, 0.338176, 0, 1, 0, -0.338176, 0, 0.0380101,
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 3 )
+
+[node name="ToggleDither" type="Node" parent="."]
+script = ExtResource( 7 )
+materials_with_dithering = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 8 ) ]

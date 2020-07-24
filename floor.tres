@@ -10,6 +10,7 @@ shader_param/uv_scale = Vector2( 10, 10 )
 shader_param/uv_offset = Vector2( 0, 0 )
 shader_param/vertex_resolution = 128.0
 shader_param/cull_distance = 100.0
+shader_param/dither_enabled = true
 shader_param/dither_resolution = 1.0
 shader_param/dither_intensity = 0.03
 shader_param/color_depth = 15

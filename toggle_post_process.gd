@@ -16,4 +16,3 @@ func _ready():
 func _process(delta):
 	if Input.is_action_just_pressed("kb_1"):
 		material.set_shader_param("enabled", !material.get_shader_param("enabled"))
-		#material.set_shader_param("enabled", false)
