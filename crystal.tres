@@ -5,10 +5,10 @@
 [resource]
 shader = ExtResource( 1 )
 shader_param/color = Color( 0.87451, 0, 1, 0.4 )
-shader_param/specular_intensity = 0.0
-shader_param/resolution = 128.0
-shader_param/cull_distance = 100.0
 shader_param/uv_scale = Vector2( 1, 1 )
 shader_param/uv_offset = Vector2( 0, 0 )
-shader_param/dither_resolution = Vector2( 32, 32 )
-shader_param/dither_intensity = 0.025
+shader_param/vertex_resolution = 128.0
+shader_param/cull_distance = 50.0
+shader_param/dither_resolution = 1.0
+shader_param/dither_intensity = 0.06
+shader_param/color_depth = 15
