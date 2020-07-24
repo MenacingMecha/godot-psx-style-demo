@@ -49,19 +49,32 @@ void fragment()
     {
         // TODO: move calculating the blur to a seperate method
         // TODO: try a second vertical pass
-        vec2 scale = TEXTURE_PIXEL_SIZE * blur_scale;
         
         float weight = 0.0;
         float total_weight = 0.0;
-        vec4 color = vec4(0.0);
+        vec2 scale_horiz = TEXTURE_PIXEL_SIZE * vec2(blur_scale.x, 0.0);
+        vec4 color_horiz = vec4(0.0);
         
         for(int i=-int(blur_samples)/2; i < int(blur_samples)/2; ++i) {
             weight = gaussian(float(i));
-            color += texture(TEXTURE, UV + scale * vec2(float(i))) * weight;
+            color_horiz += texture(TEXTURE, UV + scale_horiz * vec2(float(i))) * weight;
             total_weight += weight;
         }
 
-        vec4 blur = color / total_weight;
+        weight = 0.0;
+        total_weight = 0.0;
+        vec2 scale_vert = TEXTURE_PIXEL_SIZE * vec2(0.0, blur_scale.y);
+        vec4 color_vert = vec4(0.0);
+
+        for(int i=-int(blur_samples)/2; i < int(blur_samples)/2; ++i) {
+            weight = gaussian(float(i));
+            color_vert += texture(TEXTURE, UV + scale_vert * vec2(float(i))) * weight;
+            total_weight += weight;
+        }
+
+        vec4 blur_horiz = color_horiz / total_weight;
+        vec4 blur_vert = color_vert / total_weight;
+        vec4 blur = mix(color_horiz, color_vert, 0.5);
 
         int pos_x = int(mod(FRAGCOORD.x, 3.0));
         int pos_y = int(mod(FRAGCOORD.y, float(scanline_gap)));
