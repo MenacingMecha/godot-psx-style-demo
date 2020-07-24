@@ -5,7 +5,7 @@
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 1 )
-shader_param/opacity = 0.4
+shader_param/opacity = 0.25
 shader_param/scanline_gap = 5
 
 [node name="ViewportContainer" type="ViewportContainer"]
@@ -13,7 +13,7 @@ material = SubResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 stretch = true
-stretch_shrink = 2
+stretch_shrink = 4
 __meta__ = {
 "_edit_use_anchors_": false
 }
