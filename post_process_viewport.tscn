@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://shaders/lcd_post_process.shader" type="Shader" id=1]
 [ext_resource path="res://world.tscn" type="PackedScene" id=2]
+[ext_resource path="res://toggle_post_process.gd" type="Script" id=3]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 1 )
@@ -17,6 +18,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 stretch = true
 stretch_shrink = 4
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
