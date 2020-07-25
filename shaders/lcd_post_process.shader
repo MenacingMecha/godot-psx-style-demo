@@ -1,10 +1,13 @@
 shader_type canvas_item;
 
 uniform bool enabled = true;
-uniform float opacity = 0.5;
-uniform int scanline_gap = 5;
 uniform vec2 blur_scale = vec2(0.1, 0.0);
 uniform float blur_samples = 50.0;
+uniform float glow_strength = 1.5;
+uniform float lcd_opacity = 0.5;
+uniform int scanline_gap = 5;
+
+const float PI2 = 6.283185307179586476925286766559;
 
 // http://theorangeduck.com/page/avoiding-shader-conditionals
 float when_eq(int x, int y)
@@ -30,9 +33,6 @@ vec4 lcdColor(int pos_x, int pos_y)
     return lcdColor;
 }
 
-// const float blur_samples = 71.0;
-// const float blur_samples = 50.0;
-const float PI2 = 6.283185307179586476925286766559;
 
 float gaussian(float x)
 {
@@ -48,8 +48,6 @@ void fragment()
     if (enabled)
     {
         // TODO: move calculating the blur to a seperate method
-        // TODO: try a second vertical pass
-        
         float weight = 0.0;
         float total_weight = 0.0;
         vec2 scale_horiz = TEXTURE_PIXEL_SIZE * vec2(blur_scale.x, 0.0);
@@ -78,8 +76,9 @@ void fragment()
 
         int pos_x = int(mod(FRAGCOORD.x, 3.0));
         int pos_y = int(mod(FRAGCOORD.y, float(scanline_gap)));
-        vec4 lcd = blur * mix(vec4(1), lcdColor(pos_x, pos_y), opacity);
-        COLOR = lcd;
+        vec4 lcd_overlay_tex = lcdColor(pos_x, pos_y);
+
+        COLOR = (blur * vec4(glow_strength)) * mix(vec4(1), lcd_overlay_tex, lcd_opacity);
     }
     else
     {
