@@ -1,20 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://shaders/lcd_post_process.shader" type="Shader" id=1]
+[ext_resource path="res://post_process_viewport_material.tres" type="Material" id=1]
 [ext_resource path="res://world.tscn" type="PackedScene" id=2]
 [ext_resource path="res://toggle_post_process.gd" type="Script" id=3]
 
-[sub_resource type="ShaderMaterial" id=1]
-shader = ExtResource( 1 )
-shader_param/enabled = true
-shader_param/blur_scale = Vector2( 0.35, 0.35 )
-shader_param/blur_samples = 10.0
-shader_param/glow_strength = 1.8
-shader_param/lcd_opacity = 0.55
-shader_param/scanline_gap = 5
-
 [node name="ViewportContainer" type="ViewportContainer"]
-material = SubResource( 1 )
+material = ExtResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 stretch = true
@@ -23,6 +14,7 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+toggle_action_name = "kb_1"
 
 [node name="Viewport" type="Viewport" parent="."]
 size = Vector2( 256, 244 )
