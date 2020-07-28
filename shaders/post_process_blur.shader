@@ -7,6 +7,8 @@ uniform bool enabled = true;
 
 const float PI2 = 6.283185307179586476925286766559;
 
+// 2-pass gaussian blur based on https://github.com/GDQuest/godot-shaders/blob/master/godot/Shaders/gaussian_blur.shader
+// TODO: change to this algorithm https://github.com/GDQuest/godot-shaders/blob/master/godot/Shaders/gaussian_blur_optimized.shader
 float gaussian(float x)
 {
 	float x_squared = x*x;
