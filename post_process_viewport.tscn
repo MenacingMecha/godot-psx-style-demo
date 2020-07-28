@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://post_process_viewport_material.tres" type="Material" id=1]
+[ext_resource path="res://post_process_viewport_mat.tres" type="Material" id=1]
 [ext_resource path="res://world.tscn" type="PackedScene" id=2]
 [ext_resource path="res://toggle_post_process.gd" type="Script" id=3]
 

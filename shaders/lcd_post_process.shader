@@ -6,6 +6,7 @@ uniform float blur_samples = 50.0;
 uniform float glow_strength = 1.5;
 uniform float lcd_opacity = 0.5;
 uniform int scanline_gap = 5;
+uniform float brightness = 1.0;
 
 const float PI2 = 6.283185307179586476925286766559;
 
@@ -32,7 +33,6 @@ vec4 lcdColor(int pos_x, int pos_y)
 
     return lcdColor;
 }
-
 
 float gaussian(float x)
 {
@@ -78,7 +78,13 @@ void fragment()
         int pos_y = int(mod(FRAGCOORD.y, float(scanline_gap)));
         vec4 lcd_overlay_tex = lcdColor(pos_x, pos_y);
 
-        COLOR = (blur * vec4(glow_strength)) * mix(vec4(1), lcd_overlay_tex, lcd_opacity);
+        // COLOR = (blur * vec4(glow_strength)) * mix(vec4(1), lcd_overlay_tex, lcd_opacity);
+
+        // vec4 hdr_pass = get_hdr_pass(tex, hdr_threshold);
+        // COLOR = gaussian_blur(TEXTURE, UV, hdr_pass.rgb);
+        // COLOR = hdr_pass;
+
+        COLOR = mix(blur, blur * lcd_overlay_tex, lcd_opacity);
     }
     else
     {
