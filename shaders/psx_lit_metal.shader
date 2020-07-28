@@ -3,6 +3,9 @@ render_mode skip_vertex_transform, diffuse_lambert_wrap, vertex_lighting;
 
 uniform vec4 color : hint_color;
 uniform sampler2D albedoTex : hint_albedo;
+uniform sampler2D reflectionTex : hint_albedo;
+uniform samplerCube cubemap;
+uniform float cubemap_opacity;
 uniform vec2 uv_scale = vec2(1.0, 1.0);
 uniform vec2 uv_offset = vec2(.0, .0);
 uniform float vertex_resolution = 128;
@@ -11,11 +14,13 @@ uniform bool dither_enabled = true;
 uniform float dither_resolution = 1;
 uniform float dither_intensity = 0.03;
 uniform int color_depth = 15;
+uniform vec3 luminosity = vec3(.299, 0.587, 0.114);
 
 varying vec4 vertex_coordinates;
 
 varying vec2 shiftedPosition;
 varying vec2 width_height;
+varying vec3 cubemap_UV;
 
 // https://gist.github.com/jw-0/9486042b5343c1f4f90451de7f4ef86e
 float dither4x4(vec2 position, float brightness)
@@ -54,11 +59,12 @@ vec4 band_color(vec4 _color, int num_of_colors)
 	return floor(_color * num_of_colors_vec) / num_of_colors_vec;
 }
 
-// https://github.com/marmitoTH/godot-psx-shaders/
 void vertex()
 {
 	UV = UV * uv_scale + uv_offset;
 
+	// affine texture mapping & vertex snapping
+	// https://github.com/marmitoTH/godot-psx-shaders/
 	float vertex_distance = length((MODELVIEW_MATRIX * vec4(VERTEX, 1.0)));
 	VERTEX = (MODELVIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	float vPos_w = (PROJECTION_MATRIX * vec4(VERTEX, 1.0)).w;
@@ -66,18 +72,34 @@ void vertex()
 	vertex_coordinates = vec4(UV * VERTEX.z, VERTEX.z, .0);
 
 	VERTEX = vertex_distance > cull_distance ? vec3(.0) : VERTEX;
+
+	// define cubemap UV
+	// https://godotforums.org/discussion/15406/cubemap-reflections-cubic-environment-mapping
+	vec4 invcamx = INV_CAMERA_MATRIX[0];
+	vec4 invcamy = INV_CAMERA_MATRIX[1];
+	vec4 invcamz = INV_CAMERA_MATRIX[2];
+	vec4 invcamw = INV_CAMERA_MATRIX[3];
+
+	vec3 CameraPosition = -invcamw.xyz * mat3( invcamx.xyz, invcamy.xyz, invcamz.xyz );
+
+	vec3 vertexW = (WORLD_MATRIX * vec4(VERTEX, 0.0)).xyz; 		//vertex from model to world space
+	vec3 N = normalize(WORLD_MATRIX * vec4(NORMAL.x, NORMAL.y, NORMAL.z, 0.0)).xyz;	//normal from model space to world space
+	vec3 I = normalize(vertexW - CameraPosition);				//incident vector (from camera to vertex)
+	vec3 R = reflect(I, N);					//reflection vector (from vertex to cube map)
+	R.z *= -1.0;
+	cubemap_UV = R;
 }
 
 void fragment()
 {
-	vec4 tex = texture(albedoTex, vertex_coordinates.xy / vertex_coordinates.z) * color;
-	vec4 banded_tex = band_color(tex, color_depth);
+	vec4 banded_color = band_color(color, color_depth);
+	vec4 cubemap_tex = texture(cubemap, cubemap_UV);
+	vec4 metal_surface = banded_color * cubemap_tex;
 	if (dither_enabled)
 	{
-		vec3 luminosity = vec3(.299, 0.587, 0.114);
-		float luma = dot(tex.rgb, luminosity);
+		float luma = dot(color.rgb, luminosity);
 		vec4 checker = vec4(vec3(dither4x4(vec2(dither_resolution) * FRAGCOORD.xy, luma)), 1);
-		banded_tex = mix(banded_tex, banded_tex * checker, dither_intensity);
+		metal_surface = mix(metal_surface, metal_surface * checker, dither_intensity);
 	}
-	ALBEDO = banded_tex.rgb;
+	ALBEDO = metal_surface.rgb;
 }

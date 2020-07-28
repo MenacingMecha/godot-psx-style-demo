@@ -67,16 +67,13 @@ void fragment()
 {
 	vec4 tex = texture(albedoTex, vertex_coordinates.xy / vertex_coordinates.z) * color;
 	vec4 banded_tex = band_color(tex, color_depth);
-	ALPHA = color.a;
 	if (dither_enabled)
 	{
 		const vec3 luminosity = vec3(.299, 0.587, 0.114);
 		float luma = dot(tex.rgb, luminosity);
 		vec4 checker = vec4(vec3(dither4x4(vec2(dither_resolution) * FRAGCOORD.xy, luma)), 1);
-		ALBEDO = mix(banded_tex, checker, dither_intensity).rgb;
+		banded_tex = mix(banded_tex, banded_tex * checker, dither_intensity);
 	}
-	else
-	{
-		ALBEDO = banded_tex.rgb;
-	}
+	ALBEDO = banded_tex.rgb;
+	ALPHA = color.a;
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://spatial_sin_pan.gd" type="Script" id=1]
 [ext_resource path="res://orbit_camera.gd" type="Script" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://crystal.tscn" type="PackedScene" id=6]
 [ext_resource path="res://toggle_dither.gd" type="Script" id=7]
 [ext_resource path="res://crystal.tres" type="Material" id=8]
+[ext_resource path="res://box.obj" type="ArrayMesh" id=9]
+[ext_resource path="res://object_metal_mat.tres" type="Material" id=10]
 
 [sub_resource type="PlaneMesh" id=1]
 size = Vector2( 20, 20 )
@@ -28,18 +30,27 @@ dof_blur_near_distance = 10.37
 
 [node name="World" type="Spatial"]
 
-[node name="BoxObject" type="CSGBox" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.839492, 1.95543, 0.224841 )
-cast_shadow = 0
-width = 1.0
-height = 1.0
-depth = 1.0
-material = ExtResource( 3 )
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 0.613118, 0, 0, 0, 0.613118, 0, 0, 0, 0.613118, -1.02981, 2.23627, -0.296316 )
+mesh = ExtResource( 9 )
+material/0 = ExtResource( 10 )
 script = ExtResource( 1 )
-shadow_path = NodePath("../../World/BoxShadow")
-translation_speed = 2.0
+shadow_path = NodePath("../BoxShadow")
 
 [node name="BoxShadow" parent="." instance=ExtResource( 5 )]
+transform = Transform( 3.2649, 0, 0, 0, -1.42713e-07, 1, 0, -3.2649, -4.37114e-08, -1.05202, 0.507847, 0.0395253 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="."]
+transform = Transform( 0.613118, 0, 0, 0, 0.613118, 0, 0, 0, 0.613118, 0.684892, 2.23627, 0.239706 )
+mesh = ExtResource( 9 )
+material/0 = ExtResource( 3 )
+script = ExtResource( 1 )
+shadow_path = NodePath("../BoxShadow")
+rotation_speed = 0.0
+translation_distance = -0.5
+
+[node name="BoxShadow2" parent="." instance=ExtResource( 5 )]
+transform = Transform( 3.2649, 0, 0, 0, -1.42713e-07, 1, 0, -3.2649, -4.37114e-08, 0.651182, 0.507847, 0.572559 )
 
 [node name="Floor" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )
@@ -59,24 +70,8 @@ script = ExtResource( 2 )
 transform = Transform( 0.933862, -0.0527137, 0.353729, 0, 0.989078, 0.147395, -0.357635, -0.137647, 0.923662, 1.99246, 2.14704, 3.99422 )
 fov = 68.1243
 
-[node name="SphereObject" type="CSGSphere" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.957666, 1.86571, -0.163884 )
-cast_shadow = 0
-radius = 0.75
-radial_segments = 6
-rings = 3
-smooth_faces = false
-material = ExtResource( 3 )
-script = ExtResource( 1 )
-shadow_path = NodePath("../../World/BoxShadow2")
-translation_distance = -0.5
-translation_speed = 2.0
-
-[node name="BoxShadow2" parent="." instance=ExtResource( 5 )]
-transform = Transform( 3.2649, 0, 0, 0, -1.42713e-07, 1, 0, -3.2649, -4.37114e-08, 0.88818, 0, 0.225 )
-
 [node name="Crystal" parent="." instance=ExtResource( 6 )]
-transform = Transform( 0.340305, 0, 0, 0, 1, 0, 0, 0, 0.340305, -1.88025, 0.913742, 0.620915 )
+transform = Transform( 0.340305, 0, 0, 0, 1, 0, 0, 0, 0.340305, -2.34937, 0.913742, 0.620915 )
 
 [node name="Crystal5" parent="." instance=ExtResource( 6 )]
 transform = Transform( 0.28803, 0, -0.181235, 0, 1, 0, 0.181235, 0, 0.28803, -0.820814, 0.913742, 2.07995 )
@@ -95,4 +90,4 @@ environment = SubResource( 3 )
 
 [node name="ToggleDither" type="Node" parent="."]
 script = ExtResource( 7 )
-materials_with_dithering = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 8 ) ]
+materials_with_dithering = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 10 ) ]
