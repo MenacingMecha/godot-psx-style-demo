@@ -4,10 +4,7 @@
 
 [resource]
 shader = ExtResource( 1 )
-shader_param/hdr_threshold = Vector3( 1, 1, 1 )
-shader_param/exposure = 1.0
-shader_param/hdr_threshold_float = 1.0
 shader_param/blur_scale = Vector2( 0.4, 0.4 )
 shader_param/blur_samples = 50.0
-shader_param/blur_brightness = 1.7
+shader_param/blur_brightness = 1.6
 shader_param/enabled = true
