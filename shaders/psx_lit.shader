@@ -5,12 +5,13 @@ uniform vec4 color : hint_color;
 uniform sampler2D albedoTex : hint_albedo;
 uniform vec2 uv_scale = vec2(1.0, 1.0);
 uniform vec2 uv_offset = vec2(.0, .0);
-uniform float vertex_resolution = 128;
-uniform float cull_distance = 50;
+uniform float vertex_resolution = 80;
+uniform float cull_distance = 100;
 uniform bool dither_enabled = true;
 uniform float dither_resolution = 1;
-uniform float dither_intensity = 0.03;
+uniform float dither_intensity = 0.1;
 uniform int color_depth = 15;
+uniform vec3 dither_luminosity = vec3(.299, 0.587, 0.114);
 
 varying vec4 vertex_coordinates;
 
@@ -74,8 +75,7 @@ void fragment()
 	vec4 banded_tex = band_color(tex, color_depth);
 	if (dither_enabled)
 	{
-		vec3 luminosity = vec3(.299, 0.587, 0.114);
-		float luma = dot(tex.rgb, luminosity);
+		float luma = dot(tex.rgb, dither_luminosity);
 		vec4 checker = vec4(vec3(dither4x4(vec2(dither_resolution) * FRAGCOORD.xy, luma)), 1);
 		banded_tex = mix(banded_tex, banded_tex * checker, dither_intensity);
 	}
