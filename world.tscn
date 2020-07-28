@@ -45,7 +45,7 @@ transform = Transform( 0.613118, 0, 0, 0, 0.613118, 0, 0, 0, 0.613118, 0.684892,
 mesh = ExtResource( 9 )
 material/0 = ExtResource( 3 )
 script = ExtResource( 1 )
-shadow_path = NodePath("../BoxShadow")
+shadow_path = NodePath("../BoxShadow2")
 rotation_speed = 0.0
 translation_distance = -0.5
 
