@@ -25,4 +25,6 @@ Collection of shaders and materials to recreate the following aspects of the PS1
 - Use a low internal resolution with a higher test resolution (or higher resolution with viewport scaling enabled if using post-processing)
 - Use only ambient world lighting with fog
 
-Originally based on https://github.com/marmitoTH/godot-psx-shaders
+Originally based on: https://github.com/marmitoTH/godot-psx-shaders
+
+Floor texture: https://stealthix.itch.io/rpg-nature-tileset
