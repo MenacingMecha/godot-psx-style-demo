@@ -27,4 +27,4 @@ Collection of shaders and materials to recreate the following aspects of the PS1
 
 Originally based on: https://github.com/marmitoTH/godot-psx-shaders
 
-Floor texture: https://stealthix.itch.io/rpg-nature-tileset
+Floor texture (availible under CC-0): https://stealthix.itch.io/rpg-nature-tileset
