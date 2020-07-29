@@ -12,9 +12,13 @@ Collection of shaders and materials to recreate the following aspects of the PS1
 - Fog to limit draw distance
 - LCD post-processing shader to emulate old displays
 
-Additionally, the LCD post-processing and the hardware dithering can be toggled with 1 and 2 respectively.
+## Demo Controls
 
-For best results when using:
+- 1: Toggle post-process passes
+- 2: Toggle dithering
+- Space: Toggle camera and object movement
+
+## For best results when using
 
 - Use low poly models
 - Low resolution textures (with filtering and mip-maps disabled)
