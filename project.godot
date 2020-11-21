@@ -21,9 +21,10 @@ config/icon="res://icon.png"
 
 [display]
 
-window/size/height=976
-window/size/test_width=1024
-window/size/test_height=976
+window/size/width=768
+window/size/height=732
+window/size/test_width=768
+window/size/test_height=732
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
