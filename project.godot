@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="PSX TEST"
-run/main_scene="res://post_process/post_process_blur.tscn"
+run/main_scene="res://post_process/pp_stack.tscn"
 config/icon="res://icon.png"
 
 [display]
