@@ -7,6 +7,7 @@ uniform sampler2D albedoTex : hint_albedo;
 uniform vec2 uv_scale = vec2(1.0, 1.0);
 uniform vec2 uv_offset = vec2(.0, .0);
 uniform int color_depth = 15;
+uniform bool dither_enabled = true;
 uniform bool fog_enabled = true;
 uniform vec4 fog_color : hint_color = vec4(0.5, 0.7, 1.0, 1.0);
 uniform float min_fog_distance : hint_range(0, 100) = 10;
@@ -91,6 +92,6 @@ void fragment()
 	ALBEDO = COLOR.rgb;
 	ALBEDO *= (texture(albedoTex, UV) * color).rgb;
 	ALBEDO = fog_enabled ? mix(ALBEDO, fog_color.rgb, fog_weight) : ALBEDO;
-	ALBEDO *= get_dither_brightness(ALBEDO, FRAGCOORD);
+	ALBEDO = dither_enabled ? ALBEDO * get_dither_brightness(ALBEDO, FRAGCOORD) : ALBEDO;
 	ALBEDO = band_color(ALBEDO, color_depth);
 }
