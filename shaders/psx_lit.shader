@@ -3,8 +3,6 @@ render_mode skip_vertex_transform, diffuse_lambert_wrap, vertex_lighting, cull_d
 
 uniform float precision_multiplier = 2.;
 uniform vec4 color : hint_color = vec4(1.0);
-uniform bool useVertexColorAsAlbedo = false;
-uniform bool addVertexColorToAlbedo = false;
 uniform sampler2D albedoTex : hint_albedo;
 uniform vec2 uv_scale = vec2(1.0, 1.0);
 uniform vec2 uv_offset = vec2(.0, .0);
