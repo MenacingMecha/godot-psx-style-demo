@@ -12,6 +12,7 @@ uniform bool fog_enabled = true;
 uniform vec4 fog_color : hint_color = vec4(0.5, 0.7, 1.0, 1.0);
 uniform float min_fog_distance : hint_range(0, 100) = 10;
 uniform float max_fog_distance : hint_range(0, 100) = 40;
+uniform vec2 uv_pan_velocity = vec2(0.0);
 
 varying float fog_weight;
 varying float vertex_distance;
@@ -26,6 +27,7 @@ const float psx_fixed_point_precision = 16.16;
 void vertex()
 {
 	UV = UV * uv_scale + uv_offset;
+	UV += uv_pan_velocity * TIME;
 
 	// Vertex snapping
 	// based on https://github.com/BroMandarin/unity_lwrp_psx_shader/blob/master/PS1.shader

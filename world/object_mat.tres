@@ -15,4 +15,5 @@ shader_param/fog_enabled = true
 shader_param/fog_color = Color( 0, 0, 0, 1 )
 shader_param/min_fog_distance = 10.0
 shader_param/max_fog_distance = 40.0
+shader_param/uv_pan_velocity = Vector2( 0, 0 )
 shader_param/albedoTex = ExtResource( 2 )
