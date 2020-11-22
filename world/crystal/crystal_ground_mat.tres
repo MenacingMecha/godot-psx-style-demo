@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://shaders/psx_lit.shader" type="Shader" id=1]
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/precision_multiplier = 2.0
+shader_param/color = Color( 1, 1, 1, 1 )
+shader_param/uv_scale = Vector2( 1, 1 )
+shader_param/uv_offset = Vector2( 0, 0 )
+shader_param/color_depth = 15
+shader_param/dither_enabled = true
+shader_param/fog_enabled = false
+shader_param/fog_color = Color( 0.5, 0.7, 1, 1 )
+shader_param/min_fog_distance = 10.0
+shader_param/max_fog_distance = 40.0
+shader_param/uv_pan_velocity = Vector2( 0, 0 )
