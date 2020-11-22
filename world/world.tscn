@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://world/orbit_camera.gd" type="Script" id=1]
 [ext_resource path="res://world/toggle_dither.gd" type="Script" id=2]
@@ -6,10 +6,23 @@
 [ext_resource path="res://world/floor.tres" type="Material" id=4]
 [ext_resource path="res://world/object_mat.tres" type="Material" id=5]
 [ext_resource path="res://world/shadow/shadow.tscn" type="PackedScene" id=6]
+[ext_resource path="res://world/sparkle_mat.tres" type="Material" id=7]
 [ext_resource path="res://world/box.obj" type="ArrayMesh" id=8]
 [ext_resource path="res://world/object_metal_mat.tres" type="Material" id=9]
 [ext_resource path="res://world/crystal/crystal_spire_mat.tres" type="Material" id=10]
 [ext_resource path="res://world/crystal/crystal_mesh.tscn" type="PackedScene" id=11]
+
+[sub_resource type="ParticlesMaterial" id=5]
+direction = Vector3( 1, 1, 1 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 3.0
+initial_velocity_random = 0.3
+damping = 1.0
+
+[sub_resource type="QuadMesh" id=4]
+material = ExtResource( 7 )
+size = Vector2( 0.3, 0.3 )
 
 [sub_resource type="PlaneMesh" id=1]
 size = Vector2( 40, 40 )
@@ -36,6 +49,11 @@ mesh = ExtResource( 8 )
 material/0 = ExtResource( 9 )
 script = ExtResource( 3 )
 shadow_path = NodePath("../BoxShadow")
+
+[node name="Particles" type="Particles" parent="BoxChrome"]
+transform = Transform( 0.999973, 0.00729208, -0.00112456, -0.00729237, 0.999973, -0.000250523, 0.00112271, 0.000258713, 0.999999, 0, 0, 0 )
+process_material = SubResource( 5 )
+draw_pass_1 = SubResource( 4 )
 
 [node name="BoxShadow" parent="." instance=ExtResource( 6 )]
 transform = Transform( 3.2649, 0, 0, 0, -1.42713e-07, 1, 0, -3.2649, -4.37114e-08, -1.05202, 0.507847, 0.0395253 )
