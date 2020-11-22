@@ -81,7 +81,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.993481, 0 )
 shape = SubResource( 4 )
 
 [node name="OrbitPoint" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.38419e-07, -4.76837e-07 )
+transform = Transform( 0.831023, 0, -0.556238, 0, 1, 0, 0.556238, 0, 0.831023, 0, -2.38419e-07, -4.76837e-07 )
 script = ExtResource( 1 )
 
 [node name="Camera" type="Camera" parent="OrbitPoint"]
