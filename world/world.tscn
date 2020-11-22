@@ -12,7 +12,7 @@
 [ext_resource path="res://world/crystal/crystal_spire_mat.tres" type="Material" id=10]
 [ext_resource path="res://world/crystal/crystal_mesh.tscn" type="PackedScene" id=11]
 
-[sub_resource type="ParticlesMaterial" id=5]
+[sub_resource type="ParticlesMaterial" id=1]
 direction = Vector3( 1, 1, 1 )
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
@@ -20,19 +20,19 @@ initial_velocity = 3.0
 initial_velocity_random = 0.3
 damping = 1.0
 
-[sub_resource type="QuadMesh" id=4]
+[sub_resource type="QuadMesh" id=2]
 material = ExtResource( 7 )
 size = Vector2( 0.3, 0.3 )
 
-[sub_resource type="PlaneMesh" id=1]
+[sub_resource type="PlaneMesh" id=3]
 size = Vector2( 40, 40 )
 subdivide_width = 25
 subdivide_depth = 25
 
-[sub_resource type="BoxShape" id=2]
+[sub_resource type="BoxShape" id=4]
 extents = Vector3( 3.0314, 1, 1 )
 
-[sub_resource type="Environment" id=3]
+[sub_resource type="Environment" id=5]
 background_mode = 1
 ambient_light_color = Color( 1, 1, 1, 1 )
 ambient_light_energy = 0.0
@@ -52,8 +52,8 @@ shadow_path = NodePath("../BoxShadow")
 
 [node name="Particles" type="Particles" parent="BoxChrome"]
 transform = Transform( 0.999973, 0.00729208, -0.00112456, -0.00729237, 0.999973, -0.000250523, 0.00112271, 0.000258713, 0.999999, 0, 0, 0 )
-process_material = SubResource( 5 )
-draw_pass_1 = SubResource( 4 )
+process_material = SubResource( 1 )
+draw_pass_1 = SubResource( 2 )
 
 [node name="BoxShadow" parent="." instance=ExtResource( 6 )]
 transform = Transform( 3.2649, 0, 0, 0, -1.42713e-07, 1, 0, -3.2649, -4.37114e-08, -1.05202, 0.507847, 0.0395253 )
@@ -71,14 +71,14 @@ translation_distance = -0.5
 transform = Transform( 3.2649, 0, 0, 0, -1.42713e-07, 1, 0, -3.2649, -4.37114e-08, 0.651182, 0.507847, 0.572559 )
 
 [node name="Floor" type="MeshInstance" parent="."]
-mesh = SubResource( 1 )
+mesh = SubResource( 3 )
 material/0 = ExtResource( 4 )
 
 [node name="FloorBody" type="StaticBody" parent="Floor"]
 
 [node name="CollisionShape" type="CollisionShape" parent="Floor/FloorBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.993481, 0 )
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 
 [node name="OrbitPoint" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.38419e-07, -4.76837e-07 )
@@ -89,7 +89,7 @@ transform = Transform( 1, 0, 0, 0, 0.989078, 0.147395, 0, -0.147395, 0.989078, 0
 fov = 68.1243
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 3 )
+environment = SubResource( 5 )
 
 [node name="ToggleDither" type="Node" parent="."]
 script = ExtResource( 2 )
