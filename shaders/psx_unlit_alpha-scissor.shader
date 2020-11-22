@@ -8,10 +8,10 @@ uniform vec4 color : hint_color = vec4(1.);
 uniform sampler2D albedoTex : hint_albedo;
 uniform vec2 uv_scale = vec2(1.0, 1.0);
 uniform vec2 uv_offset = vec2(.0, .0);
+uniform bool billboard = false;
 uniform bool y_billboard = false;
 uniform int color_depth = 15;
-uniform bool use_alpha_scissor = false;
-uniform float alpha_scissor : hint_range(0, 1) = 0.9;
+uniform float alpha_scissor : hint_range(0, 1) = 0.1;
 
 // https://stackoverflow.com/a/42470600
 vec4 band_color(vec4 _color, int num_of_colors)
@@ -30,7 +30,7 @@ void vertex()
 		MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat4(CAMERA_MATRIX[0],WORLD_MATRIX[1],vec4(normalize(cross(CAMERA_MATRIX[0].xyz,WORLD_MATRIX[1].xyz)), 0.0),WORLD_MATRIX[3]);
 		MODELVIEW_MATRIX = MODELVIEW_MATRIX * mat4(vec4(1.0, 0.0, 0.0, 0.0),vec4(0.0, 1.0/length(WORLD_MATRIX[1].xyz), 0.0, 0.0), vec4(0.0, 0.0, 1.0, 0.0),vec4(0.0, 0.0, 0.0 ,1.0));
 	}
-	else
+	else if (billboard)
 	{
 		MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat4(CAMERA_MATRIX[0],CAMERA_MATRIX[1],CAMERA_MATRIX[2],WORLD_MATRIX[3]);
 	}
@@ -60,8 +60,5 @@ void fragment()
 	tex = band_color(tex, color_depth);
 	ALBEDO = tex.rgb;
 	ALPHA = tex.a;
-	if (use_alpha_scissor)
-	{
-		ALPHA_SCISSOR = alpha_scissor;
-	}
+	ALPHA_SCISSOR = alpha_scissor;
 }
