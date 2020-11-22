@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode skip_vertex_transform, diffuse_lambert_wrap, vertex_lighting, cull_disabled, unshaded;
+render_mode skip_vertex_transform, diffuse_lambert_wrap, unshaded;
 
 const float psx_fixed_point_precision = 16.16;
 
