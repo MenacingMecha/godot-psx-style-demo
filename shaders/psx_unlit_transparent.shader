@@ -2,7 +2,7 @@ shader_type spatial;
 render_mode skip_vertex_transform, diffuse_lambert_wrap, unshaded, cull_disabled;
 
 uniform float precision_multiplier = 2.;
-uniform vec4 color : hint_color = vec4(1.0);
+uniform vec4 modulate_color : hint_color = vec4(1.0);
 uniform sampler2D albedoTex : hint_albedo;
 uniform vec2 uv_scale = vec2(1.0, 1.0);
 uniform vec2 uv_offset = vec2(.0, .0);
@@ -91,7 +91,7 @@ vec4 band_color(vec4 _color, int num_of_colors)
 
 void fragment()
 {
-	vec4 tex = texture(albedoTex, UV) * color;
+	vec4 tex = texture(albedoTex, UV) * modulate_color;
 	ALBEDO = COLOR.rgb;
 	ALBEDO *= tex.rgb;
 	ALBEDO = fog_enabled ? mix(ALBEDO, fog_color.rgb, fog_weight) : ALBEDO;

@@ -2,7 +2,7 @@ shader_type spatial;
 render_mode skip_vertex_transform, diffuse_lambert_wrap, unshaded;
 
 uniform float precision_multiplier = 2.;
-uniform vec4 color : hint_color = vec4(1.);
+uniform vec4 modulate_color : hint_color = vec4(1.);
 uniform sampler2D albedoTex : hint_albedo;
 uniform vec2 uv_scale = vec2(1.0, 1.0);
 uniform vec2 uv_offset = vec2(.0, .0);
@@ -55,7 +55,7 @@ void vertex()
 
 void fragment()
 {
-	vec4 tex = texture(albedoTex, UV) * color;
+	vec4 tex = texture(albedoTex, UV) * modulate_color;
 	tex = band_color(tex, color_depth);
 	ALBEDO = tex.rgb;
 	ALPHA = tex.a;

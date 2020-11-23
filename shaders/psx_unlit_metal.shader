@@ -2,8 +2,8 @@ shader_type spatial;
 render_mode skip_vertex_transform, diffuse_lambert_wrap, unshaded, cull_disabled;
 
 uniform float precision_multiplier = 2.;
-uniform vec4 color : hint_color = vec4(1.0);
-uniform vec4 metal_color : hint_color = vec4(1.0);
+uniform vec4 modulate_color : hint_color = vec4(1.0);
+uniform vec4 metal_modulate_color : hint_color = vec4(1.0);
 uniform samplerCube cubemap;
 uniform vec3 cubemap_uv_scale = vec3(1.0);
 uniform int color_depth = 15;
@@ -104,8 +104,8 @@ vec3 band_color(vec3 _color, int num_of_colors)
 
 void fragment()
 {
-	ALBEDO = (COLOR * color).rgb;
-	vec4 tex = texture(cubemap, cubemap_UV * cubemap_uv_scale) * metal_color;
+	ALBEDO = (COLOR * modulate_color).rgb;
+	vec4 tex = texture(cubemap, cubemap_UV * cubemap_uv_scale) * metal_modulate_color;
 	ALBEDO *= tex.rgb;
 	ALBEDO = fog_enabled ? mix(ALBEDO, fog_color.rgb, fog_weight) : ALBEDO;
 	ALBEDO = dither_enabled ? ALBEDO * get_dither_brightness(ALBEDO, FRAGCOORD) : ALBEDO;
