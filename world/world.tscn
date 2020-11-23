@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://world/orbit_camera.gd" type="Script" id=1]
 [ext_resource path="res://world/toggle_dither.gd" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://world/object_metal_mat.tres" type="Material" id=9]
 [ext_resource path="res://world/crystal/crystal_spire_mat.tres" type="Material" id=10]
 [ext_resource path="res://world/crystal/crystal_mesh.tscn" type="PackedScene" id=11]
+[ext_resource path="res://world/crystal/crystal_ground_mat.tres" type="Material" id=12]
 
 [sub_resource type="ParticlesMaterial" id=1]
 direction = Vector3( 1, 1, 1 )
@@ -93,7 +94,7 @@ environment = SubResource( 5 )
 
 [node name="ToggleDither" type="Node" parent="."]
 script = ExtResource( 2 )
-materials_with_dithering = [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 10 ), ExtResource( 9 ) ]
+materials_with_dithering = [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 12 ) ]
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.524194, -0.536217, 0.661583, 0, 0.776871, 0.629659, -0.851599, -0.330064, 0.407231, 4.40183, 2.79045, 2.57139 )
