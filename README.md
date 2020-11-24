@@ -1,14 +1,19 @@
 # Godot PSX Style Demo
 
-[WebGL demo](https://menacingmecha.itch.io/godot-psx-style-demo)
+[Play demo in browser!](https://menacingmecha.itch.io/godot-psx-style-demo)
 
-Collection of shaders and materials to recreate the following aspects of the PS1 aesthetic:
+![Preview GIF](./readme-assets/preview.gif)
 
-- Vertex snapping
-- Affine texture mapping
-- Hardware dithering
-- Shiny metallic surfaces based on cubemap reflections
-- Sprite-based shadows
+![Example Screenshot](./readme-assets/screenshot.png)
+
+A collection of shaders and materials for Godot engine that aim to recreate the following aspects of the PS1 aesthetic:
+
+- Vertex "snapping"
+- "Wobbly" texures through affine texture mapping
+- Limited color depth
+- Hardware dithering to hide color banding
+- Shiny chrome-like metallic surfaces based on cubemap reflections
+- Billboard sprites
 - Fog to limit draw distance
 - LCD post-processing shader to emulate old displays
 
@@ -17,14 +22,18 @@ Collection of shaders and materials to recreate the following aspects of the PS1
 - 1: Toggle post-process passes
 - 2: Toggle dithering
 - Space: Toggle camera and object movement
+- R: Reset scene
 
-## For best results when using
+## Tips for best results
 
 - Use low poly models
-- Low resolution textures (with filtering and mip-maps disabled)
-- Use a low internal resolution with a higher test resolution (or higher resolution with viewport scaling enabled if using post-processing)
-- Use only ambient world lighting with fog
+- Keep textures as low resolution as you can
+    - Make sure filtering and mip-maps are both disabled
+    - Use vertex colours instead of texture maps wherever possible
+- Keep your internal resolution low
+    - Standard PS1 resolution was 256×224, but you can easily go widescreen by using a 16:9 resolution with similar height
+- Use as basic of a lighting set up as you can get away with
 
 Originally based on: https://github.com/marmitoTH/godot-psx-shaders
 
-Floor texture (availible under CC-0): https://stealthix.itch.io/rpg-nature-tileset
+Floor texture (available under CC-0): https://stealthix.itch.io/rpg-nature-tileset

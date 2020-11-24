@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://post_process/toggle_post_process.gd" type="Script" id=1]
+[ext_resource path="res://post_process/pp_blur_mat.tres" type="Material" id=2]
+[ext_resource path="res://post_process/pp_lcd_mat.tres" type="Material" id=3]
+[ext_resource path="res://world/world.tscn" type="PackedScene" id=4]
+
+[node name="BlurPostProcess" type="ViewportContainer"]
+material = ExtResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+toggle_action_name = "kb_1"
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 768, 732 )
+handle_input_locally = false
+render_target_update_mode = 3
+audio_listener_enable_2d = true
+audio_listener_enable_3d = true
+
+[node name="LCDOverlay" type="ViewportContainer" parent="Viewport"]
+material = ExtResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+stretch = true
+stretch_shrink = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+toggle_action_name = "kb_1"
+
+[node name="Viewport" type="Viewport" parent="Viewport/LCDOverlay"]
+size = Vector2( 256, 244 )
+handle_input_locally = false
+render_target_update_mode = 3
+audio_listener_enable_2d = true
+audio_listener_enable_3d = true
+
+[node name="World" parent="Viewport/LCDOverlay/Viewport" instance=ExtResource( 4 )]

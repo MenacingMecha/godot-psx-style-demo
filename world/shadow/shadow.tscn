@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://world/shadow/shadow.png" type="Texture" id=1]
+[ext_resource path="res://world/shadow/shadow.gd" type="Script" id=2]
+
+
+
+[node name="BoxShadow" type="Sprite3D"]
+transform = Transform( 3.2649, 0, 0, 0, -1.42713e-07, 1, 0, -3.2649, -4.37114e-08, -0.839, 0, 0.225 )
+modulate = Color( 1, 1, 1, 0.635294 )
+texture = ExtResource( 1 )
+script = ExtResource( 2 )
+scale_min = 3.0
+scale_max = 7.0
+max_distance_from_ground = 3.0

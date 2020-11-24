@@ -1,77 +1,49 @@
-shader_type spatial; 
-render_mode skip_vertex_transform, diffuse_lambert_wrap, vertex_lighting;
+shader_type spatial;
+render_mode skip_vertex_transform, diffuse_lambert_wrap, vertex_lighting, cull_disabled, shadows_disabled, ambient_light_disabled;
 
-uniform vec4 color : hint_color;
-uniform sampler2D albedoTex : hint_albedo;
-uniform sampler2D reflectionTex : hint_albedo;
+uniform float precision_multiplier = 2.;
+uniform vec4 modulate_color : hint_color = vec4(1.0);
+uniform vec4 metal_modulate_color : hint_color = vec4(1.0);
 uniform samplerCube cubemap;
-uniform float cubemap_opacity;
-uniform vec2 uv_scale = vec2(1.0, 1.0);
-uniform vec2 uv_offset = vec2(.0, .0);
-uniform float vertex_resolution = 128;
-uniform float cull_distance = 100;
-uniform bool dither_enabled = true;
-uniform float dither_resolution = 1;
-uniform float dither_intensity = 0.1;
+uniform vec3 cubemap_uv_scale = vec3(1.0);
 uniform int color_depth = 15;
-uniform vec3 dither_luminosity = vec3(.299, 0.587, 0.114);
+uniform bool dither_enabled = true;
+uniform bool fog_enabled = true;
+uniform vec4 fog_color : hint_color = vec4(0.5, 0.7, 1.0, 1.0);
+uniform float min_fog_distance : hint_range(0, 100) = 10;
+uniform float max_fog_distance : hint_range(0, 100) = 40;
 
-varying vec4 vertex_coordinates;
-
-varying vec2 shiftedPosition;
-varying vec2 width_height;
 varying vec3 cubemap_UV;
+varying float fog_weight;
+varying float vertex_distance;
 
-// https://gist.github.com/jw-0/9486042b5343c1f4f90451de7f4ef86e
-float dither4x4(vec2 position, float brightness)
+float inv_lerp(float from, float to, float value)
 {
-	float x = floor(mod(position.x, 4));
-	float y = floor(mod(position.y, 4));
-	float index = floor(x + y * 4.0);
-	float limit = 0.0;
-
-	if(x < 8.0)
-	{
-		if (index == float(0))  { limit = 0.0625; }
-		else if (index == float(1))  { limit = 0.5625; }
-		else if (index == float(2))  { limit = 0.1875; }
-		else if (index == float(3))  { limit = 0.6875; }
-		else if (index == float(4))  { limit = 0.8125; }
-		else if (index == float(5))  { limit = 0.3125; }
-		else if (index == float(6))  { limit = 0.9375; }
-		else if (index == float(7))  { limit = 0.4375; }
-		else if (index == float(8))  { limit = 0.25;   }
-		else if (index == float(9))  { limit = 0.75;   }
-		else if (index == float(10)) { limit = 0.125;  }
-		else if (index == float(11)) { limit = 0.625;  }
-		else if (index == float(12)) { limit = 1.0;    }
-		else if (index == float(13)) { limit = 0.5;    }
-		else if (index == float(14)) { limit = 0.875;  }
-		else if (index == float(15)) { limit = 0.375;  } 
-	}
-	return brightness < limit ? 1.0 : 0.0;
+	return (value - from) / (to - from);
 }
 
-// https://stackoverflow.com/a/42470600
-vec4 band_color(vec4 _color, int num_of_colors)
-{
-	vec4 num_of_colors_vec = vec4(float(num_of_colors));
-	return floor(_color * num_of_colors_vec) / num_of_colors_vec;
-}
-
+// originally based on: https://github.com/marmitoTH/godot-psx-shaders/
+const float psx_fixed_point_precision = 16.16;
 void vertex()
 {
-	UV = UV * uv_scale + uv_offset;
+	// Vertex snapping
+	// based on https://github.com/BroMandarin/unity_lwrp_psx_shader/blob/master/PS1.shader
+	float vertex_snap_step = psx_fixed_point_precision * precision_multiplier;
+	vec4 snap_to_pixel = PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0);
+	vec4 clip_vertex = snap_to_pixel;
+	clip_vertex.xyz = snap_to_pixel.xyz / snap_to_pixel.w;
+	clip_vertex.x = floor(vertex_snap_step * clip_vertex.x) / vertex_snap_step;
+	clip_vertex.y = floor(vertex_snap_step * clip_vertex.y) / vertex_snap_step;
+	clip_vertex.xyz *= snap_to_pixel.w;
+	POSITION = clip_vertex;
+	POSITION /= abs(POSITION.w);
 
-	// affine texture mapping & vertex snapping
-	// https://github.com/marmitoTH/godot-psx-shaders/
-	float vertex_distance = length((MODELVIEW_MATRIX * vec4(VERTEX, 1.0)));
-	VERTEX = (MODELVIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
-	float vPos_w = (PROJECTION_MATRIX * vec4(VERTEX, 1.0)).w;
-	VERTEX.xy = vPos_w * floor(vertex_resolution * VERTEX.xy / vPos_w) / vertex_resolution;
-	vertex_coordinates = vec4(UV * VERTEX.z, VERTEX.z, .0);
+	VERTEX = VERTEX;  // it breaks without this
+	NORMAL = (MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz;
+	vertex_distance = length((MODELVIEW_MATRIX * vec4(VERTEX, 1.0)));
 
-	VERTEX = vertex_distance > cull_distance ? vec3(.0) : VERTEX;
+	fog_weight = inv_lerp(min_fog_distance, max_fog_distance, vertex_distance);
+	fog_weight = clamp(fog_weight, 0, 1);
 
 	// define cubemap UV
 	// https://godotforums.org/discussion/15406/cubemap-reflections-cubic-environment-mapping
@@ -90,16 +62,52 @@ void vertex()
 	cubemap_UV = R;
 }
 
+float get_dither_brightness(vec3 albedo, vec4 fragcoord)
+{
+	const float pos_mult = 1.0;
+	vec4 position_new = fragcoord * pos_mult;
+	int x = int(position_new.x) % 4;
+	int y = int(position_new.y) % 4;
+	const float luminance_r = 0.2126;
+	const float luminance_g = 0.7152;
+	const float luminance_b = 0.0722;
+	float brightness = (luminance_r * albedo.r) + (luminance_g * albedo.g) + (luminance_b * albedo.b);
+
+	// as of 3.2.2, matrix indices can only be accessed with constants, leading to this fun
+	float thresholdMatrix[16] = float[16] (
+		1.0 / 17.0,  9.0 / 17.0,  3.0 / 17.0, 11.0 / 17.0,
+		13.0 / 17.0,  5.0 / 17.0, 15.0 / 17.0,  7.0 / 17.0,
+		4.0 / 17.0, 12.0 / 17.0,  2.0 / 17.0, 10.0 / 17.0,
+		16.0 / 17.0,  8.0 / 17.0, 14.0 / 17.0,  6.0 / 17.0
+	);
+
+	float dithering = thresholdMatrix[x * 4 + y];
+	const float brightness_mod = 0.2;
+	const float dither_cull_distance = 60.;
+	if ((brightness - brightness_mod < dithering) && (vertex_distance < dither_cull_distance))
+	{
+		const float dithering_effect_size = 0.25;
+		return ((dithering - 0.5) * dithering_effect_size) + 1.0;
+	}
+	else
+	{
+		return 1.;
+	}
+}
+
+// https://stackoverflow.com/a/42470600
+vec3 band_color(vec3 _color, int num_of_colors)
+{
+	vec3 num_of_colors_vec = vec3(float(num_of_colors));
+	return floor(_color * num_of_colors_vec) / num_of_colors_vec;
+}
+
 void fragment()
 {
-	vec4 banded_color = band_color(color, color_depth);
-	vec4 cubemap_tex = texture(cubemap, cubemap_UV);
-	vec4 metal_surface = banded_color * cubemap_tex;
-	if (dither_enabled)
-	{
-		float luma = dot(color.rgb, dither_luminosity);
-		vec4 checker = vec4(vec3(dither4x4(vec2(dither_resolution) * FRAGCOORD.xy, luma)), 1);
-		metal_surface = mix(metal_surface, metal_surface * checker, dither_intensity);
-	}
-	ALBEDO = metal_surface.rgb;
+	ALBEDO = (COLOR * modulate_color).rgb;
+	vec4 cube_tex = texture(cubemap, cubemap_UV * cubemap_uv_scale) * metal_modulate_color;
+	ALBEDO *= cube_tex.rgb;
+	ALBEDO = fog_enabled ? mix(ALBEDO, fog_color.rgb, fog_weight) : ALBEDO;
+	ALBEDO = dither_enabled ? ALBEDO * get_dither_brightness(ALBEDO, FRAGCOORD) : ALBEDO;
+	ALBEDO = band_color(ALBEDO, color_depth);
 }

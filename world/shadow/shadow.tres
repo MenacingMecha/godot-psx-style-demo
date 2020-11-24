@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+
+[ext_resource path="res://shaders/psx_lit_transparent.shader" type="Shader" id=1]
+[ext_resource path="res://world/shadow/shadow.png" type="Texture" id=2]
+
+
+
+
+
+
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/color = Color( 1, 1, 1, 0.65098 )
+shader_param/specular_intensity = null
+shader_param/resolution = 256.0
+shader_param/cull_distance = 100.0
+shader_param/uv_scale = Vector2( 1, 1 )
+shader_param/uv_offset = Vector2( 0, 0 )
+shader_param/albedoTex = ExtResource( 2 )

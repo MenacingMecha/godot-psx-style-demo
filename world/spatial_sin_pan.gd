@@ -11,6 +11,8 @@ var default_y: float = 0
 var custom_rotation = Vector3.ONE
 var shadow
 
+onready var default_transform : Transform = get_transform()
+
 func _ready():
 	default_y = translation.y
 	shadow = get_node(shadow_path)
@@ -18,6 +20,11 @@ func _ready():
 func _physics_process(delta):
 	if Input.is_action_just_pressed("ui_accept"):
 		should_update = !should_update
+
+	if Input.is_action_just_pressed("reset_camera_position"):
+		set_transform(default_transform)
+		custom_rotation = Vector3.ONE
+		time = 0
 		
 	if should_update:
 		# funky movement

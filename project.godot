@@ -15,15 +15,19 @@ _global_script_class_icons={
 
 [application]
 
-config/name="PSX TEST"
-run/main_scene="res://post_process/post_process_blur.tscn"
-config/icon="res://icon.png"
+config/name="Godot PSX Style Demo"
+config/description="Demo project featuring a collection of PS1 style shaders and materials for Godot engine.
+(MIT License)
+https://github.com/MenacingMecha/godot-psx-style-demo/"
+run/main_scene="res://post_process/pp_stack.tscn"
+config/icon="res://readme-assets/screenshot.png"
 
 [display]
 
-window/size/height=976
-window/size/test_width=1024
-window/size/test_height=976
+window/size/width=768
+window/size/height=732
+window/size/test_width=768
+window/size/test_height=732
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
@@ -37,6 +41,11 @@ kb_1={
 kb_2={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":50,"unicode":0,"echo":false,"script":null)
+ ]
+}
+reset_camera_position={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"unicode":0,"echo":false,"script":null)
  ]
 }
 

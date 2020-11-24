@@ -5,5 +5,5 @@
 [resource]
 shader = ExtResource( 1 )
 shader_param/enabled = true
-shader_param/lcd_opacity = 0.7
+shader_param/lcd_opacity = 0.5
 shader_param/scanline_gap = 4
