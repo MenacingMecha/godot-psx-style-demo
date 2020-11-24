@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Godot PSX Style Demo"
-config/description="A collection of shaders and materials for Godot engine that aim to recreate various aspects of the PS1 aesthetic.
+config/description="Demo project featuring a collection of PS1 style shaders and materials for Godot engine.
 (MIT License)
 https://github.com/MenacingMecha/godot-psx-style-demo/"
 run/main_scene="res://post_process/pp_stack.tscn"
