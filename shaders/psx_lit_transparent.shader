@@ -1,5 +1,7 @@
 shader_type spatial;
-render_mode skip_vertex_transform, diffuse_lambert_wrap, vertex_lighting, cull_disabled, shadows_disabled, ambient_light_disabled;
+render_mode
+	diffuse_lambert_wrap, vertex_lighting, cull_disabled,
+	shadows_disabled, ambient_light_disabled, depth_draw_alpha_prepass;
 
 uniform vec2 precision_ratio = vec2(4.0, 3.0);
 uniform float precision_height = 240.0;
@@ -8,16 +10,19 @@ uniform vec4 modulate_color : hint_color = vec4(1.0);
 uniform sampler2D albedoTex : hint_albedo;
 uniform vec2 uv_scale = vec2(1.0, 1.0);
 uniform vec2 uv_offset = vec2(.0, .0);
-uniform int modulate_color_depth = 15;
+uniform vec2 uv_pan_velocity = vec2(0.0);
 uniform bool dither_enabled = true;
+uniform int color_depth = 15;
 uniform bool fog_enabled = true;
 uniform vec4 fog_color : hint_color = vec4(0.5, 0.7, 1.0, 1.0);
 uniform float min_fog_distance : hint_range(0, 100) = 10;
 uniform float max_fog_distance : hint_range(0, 100) = 40;
-uniform vec2 uv_pan_velocity = vec2(0.0);
+uniform bool draw_distance_enabled = true;
+uniform float draw_distance : hint_range(0, 100) = 10.0;
 
 varying float fog_weight;
 varying float vertex_distance;
+varying float origin_distance;
 
 vec2 get_vertex_snap_step()
 {
@@ -29,29 +34,11 @@ float inv_lerp(float from, float to, float value)
 	return (value - from) / (to - from);
 }
 
-// originally based on: https://github.com/marmitoTH/godot-psx-shaders/
-void vertex()
+// https://stackoverflow.com/a/42470600
+vec4 band_color(vec4 _color, int num_of_colors)
 {
-	UV = UV * uv_scale + uv_offset;
-	UV += uv_pan_velocity * TIME;
-
-	// Vertex snapping
-	// based on https://github.com/BroMandarin/unity_lwrp_psx_shader/blob/master/PS1.shader
-	vec2 vertex_snap_step = get_vertex_snap_step();
-	vec4 snap_to_pixel = PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0);
-	vec4 clip_vertex = snap_to_pixel;
-	clip_vertex.xyz = snap_to_pixel.xyz / snap_to_pixel.w;
-	clip_vertex.xy = floor(vertex_snap_step * clip_vertex.xy) / vertex_snap_step;
-	clip_vertex.xyz *= snap_to_pixel.w;
-	POSITION = clip_vertex;
-	POSITION /= abs(POSITION.w);
-
-	VERTEX = VERTEX;  // it breaks without this
-	NORMAL = (MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz;
-	vertex_distance = length((MODELVIEW_MATRIX * vec4(VERTEX, 1.0)));
-
-	fog_weight = inv_lerp(min_fog_distance, max_fog_distance, vertex_distance);
-	fog_weight = clamp(fog_weight, 0, 1);
+	vec4 num_of_colors_vec = vec4(float(num_of_colors));
+	return floor(_color * num_of_colors_vec) / num_of_colors_vec;
 }
 
 float get_dither_brightness(vec3 albedo, vec4 fragcoord)
@@ -87,21 +74,48 @@ float get_dither_brightness(vec3 albedo, vec4 fragcoord)
 	}
 }
 
-// https://stackoverflow.com/a/42470600
-vec4 band_color(vec4 _color, int num_of_colors)
+// originally based on: https://github.com/marmitoTH/godot-psx-shaders/
+void vertex()
 {
-	vec4 num_of_colors_vec = vec4(float(num_of_colors));
-	return floor(_color * num_of_colors_vec) / num_of_colors_vec;
+	UV = UV * uv_scale + uv_offset;
+	UV += uv_pan_velocity * TIME;
+
+	// Vertex snapping
+	// based on https://github.com/BroMandarin/unity_lwrp_psx_shader/blob/master/PS1.shader
+	vec2 vertex_snap_step = get_vertex_snap_step();
+	vec4 snap_to_pixel = PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0);
+	vec4 clip_vertex = snap_to_pixel;
+	clip_vertex.xyz = snap_to_pixel.xyz / snap_to_pixel.w;
+	clip_vertex.xy = floor(vertex_snap_step * clip_vertex.xy) / vertex_snap_step;
+	clip_vertex.xyz *= snap_to_pixel.w;
+	POSITION = clip_vertex;
+	POSITION /= abs(POSITION.w);
+
+	// Recalculate normal with new position
+	// Source: https://forum.unity.com/threads/shader-question-how-to-recalculate-normals-after-vertices-displacement.903248/
+	vec3 bitangent = cross(NORMAL, TANGENT.xyz);
+	vec3 nt = ((POSITION.xyz + TANGENT.xyz * 0.01) - POSITION.xyz );
+	vec3 nb = ((POSITION.xyz + bitangent * 0.01) - POSITION.xyz );
+	NORMAL = cross(nt, nb);
+
+	VERTEX = VERTEX;  // it breaks without this
+	vertex_distance = length((MODELVIEW_MATRIX * vec4(VERTEX, 1.0)));
+	origin_distance = length((MODELVIEW_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)));
+
+	fog_weight = inv_lerp(min_fog_distance, max_fog_distance, vertex_distance);
+	fog_weight = clamp(fog_weight, 0, 1);
 }
 
 void fragment()
 {
+	if (draw_distance_enabled && origin_distance > draw_distance) discard;
+
 	vec4 tex = texture(albedoTex, UV) * modulate_color;
 	ALBEDO = COLOR.rgb;
 	ALBEDO *= tex.rgb;
 	ALBEDO = fog_enabled ? mix(ALBEDO, fog_color.rgb, fog_weight) : ALBEDO;
 	ALBEDO = dither_enabled ? ALBEDO * get_dither_brightness(ALBEDO, FRAGCOORD) : ALBEDO;
-	vec4 banded_tex = band_color(vec4(ALBEDO, tex.a), modulate_color_depth);
+	vec4 banded_tex = band_color(vec4(ALBEDO, tex.a), color_depth);
 	ALBEDO = banded_tex.rgb;
 	ALPHA = banded_tex.a;
 }
