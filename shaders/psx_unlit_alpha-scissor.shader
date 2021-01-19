@@ -14,7 +14,7 @@ uniform bool billboard = false;
 uniform bool y_billboard = false;
 uniform float alpha_scissor : hint_range(0, 1) = 0.1;
 uniform bool dither_enabled = true;
-uniform int color_depth = 15;
+uniform int color_depth = 32;
 uniform bool fog_enabled = true;
 uniform vec4 fog_color : hint_color = vec4(0.5, 0.7, 1.0, 1.0);
 uniform float min_fog_distance : hint_range(0, 100) = 10;
@@ -118,7 +118,7 @@ void vertex()
 
 	VERTEX = VERTEX;  // it breaks without this
 	vertex_distance = length((MODELVIEW_MATRIX * vec4(VERTEX, 1.0)));
-	origin_distance = length((MODELVIEW_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)));
+	origin_distance = length((CAMERA_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)).xyz);
 
 	fog_weight = inv_lerp(min_fog_distance, max_fog_distance, vertex_distance);
 	fog_weight = clamp(fog_weight, 0, 1);
