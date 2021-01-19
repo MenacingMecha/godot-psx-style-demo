@@ -17,7 +17,7 @@ uniform vec4 fog_color : hint_color = vec4(0.5, 0.7, 1.0, 1.0);
 uniform float min_fog_distance : hint_range(0, 100) = 10;
 uniform float max_fog_distance : hint_range(0, 100) = 40;
 uniform bool draw_distance_enabled = true;
-uniform float draw_distance : hint_range(0, 100) = 10.0;
+uniform float draw_distance : hint_range(0, 100) = 40.0;
 
 varying vec3 cubemap_UV;
 varying float fog_weight;
