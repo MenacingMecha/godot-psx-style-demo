@@ -111,10 +111,10 @@ float get_dither_brightness(vec4 tex, vec4 fragcoord)
 void fragment()
 {
 	vec4 tex = texture(albedoTex, UV) * modulate_color;
+	ALPHA = tex.a;
 	tex = fog_enabled ? mix(tex, fog_color, fog_weight) : tex;
 	tex = dither_enabled ? tex * get_dither_brightness(tex, FRAGCOORD) : tex;
 	tex = band_color(tex, color_depth);
 	ALBEDO = tex.rgb;
-	ALPHA = tex.a;
 	ALPHA_SCISSOR = alpha_scissor;
 }
