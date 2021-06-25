@@ -5,7 +5,7 @@
 
 [resource]
 shader = ExtResource( 1 )
-shader_param/precision_multiplier = 2.0
+shader_param/precision_multiplier = 0.6
 shader_param/modulate_color = Color( 0.94902, 0.6, 0, 1 )
 shader_param/metal_modulate_color = Color( 1, 1, 1, 1 )
 shader_param/cubemap_uv_scale = Vector3( 1, 1, 1 )

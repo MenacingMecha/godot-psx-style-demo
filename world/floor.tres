@@ -5,14 +5,14 @@
 
 [resource]
 shader = ExtResource( 1 )
-shader_param/precision_multiplier = 2.0
+shader_param/precision_multiplier = 0.6
 shader_param/modulate_color = Color( 0.662745, 0.701961, 0.796078, 1 )
-shader_param/uv_scale = Vector2( 12, 12 )
+shader_param/uv_scale = Vector2( 24, 24 )
 shader_param/uv_offset = Vector2( 0, 0 )
 shader_param/color_depth = 15
 shader_param/dither_enabled = true
-shader_param/fog_enabled = true
-shader_param/fog_color = Color( 0, 0, 0, 1 )
+shader_param/fog_enabled = false
+shader_param/fog_color = Color( 0.160784, 0.156863, 0.305882, 1 )
 shader_param/min_fog_distance = 5.0
 shader_param/max_fog_distance = 16.0
 shader_param/uv_pan_velocity = Vector2( 0, 0 )

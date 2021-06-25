@@ -4,7 +4,7 @@
 
 [resource]
 shader = ExtResource( 1 )
-shader_param/precision_multiplier = 2.0
+shader_param/precision_multiplier = 0.6
 shader_param/modulate_color = Color( 1, 0, 0.917647, 0.376471 )
 shader_param/uv_scale = Vector2( 1, 1 )
 shader_param/uv_offset = Vector2( 0, 0 )

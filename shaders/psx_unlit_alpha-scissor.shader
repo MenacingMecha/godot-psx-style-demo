@@ -1,7 +1,7 @@
 shader_type spatial;
-render_mode skip_vertex_transform, diffuse_lambert_wrap, unshaded;
+render_mode unshaded, depth_draw_alpha_prepass;
 
-uniform float precision_multiplier = 2.;
+uniform float precision_multiplier : hint_range(0.0, 1.0) = 1.0;
 uniform vec4 modulate_color : hint_color = vec4(1.);
 uniform sampler2D albedoTex : hint_albedo;
 uniform vec2 uv_scale = vec2(1.0, 1.0);
@@ -18,8 +18,19 @@ vec4 band_color(vec4 _color, int num_of_colors)
 	return floor(_color * num_of_colors_vec) / num_of_colors_vec;
 }
 
-// https://github.com/marmitoTH/godot-psx-shaders/
-const float psx_fixed_point_precision = 16.16;
+// https://github.com/dsoft20/psx_retroshader/blob/master/Assets/Shaders/psx-vertexlit.shader
+const vec2 base_snap_res = vec2(160.0, 120.0);
+vec4 get_snapped_pos(vec4 base_pos)
+{
+	vec4 snapped_pos = base_pos;
+	snapped_pos.xyz = base_pos.xyz / base_pos.w; // convert to normalised device coordinates (NDC)
+	vec2 snap_res = floor(base_snap_res * precision_multiplier);  // increase "snappy-ness"
+	snapped_pos.x = floor(snap_res.x * snapped_pos.x) / snap_res.x;  // snap the base_pos to the lower-vertex_resolution grid
+	snapped_pos.y = floor(snap_res.y * snapped_pos.y) / snap_res.y;
+	snapped_pos.xyz *= base_pos.w;  // convert back to projection-space
+	return snapped_pos;
+}
+
 void vertex()
 {
 	UV = UV * uv_scale + uv_offset;
@@ -34,17 +45,8 @@ void vertex()
 		MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat4(CAMERA_MATRIX[0],CAMERA_MATRIX[1],CAMERA_MATRIX[2],WORLD_MATRIX[3]);
 	}
 
-	// Vertex snapping
-	// Based on https://github.com/BroMandarin/unity_lwrp_psx_shader/blob/master/PS1.shader
-	float vertex_snap_step = psx_fixed_point_precision * precision_multiplier;
-	vec4 snap_to_pixel = PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0);
-	vec4 clip_vertex = snap_to_pixel;
-	clip_vertex.xyz = snap_to_pixel.xyz / snap_to_pixel.w;
-	clip_vertex.x = floor(vertex_snap_step * clip_vertex.x) / vertex_snap_step;
-	clip_vertex.y = floor(vertex_snap_step * clip_vertex.y) / vertex_snap_step;
-	clip_vertex.xyz *= snap_to_pixel.w;
-	POSITION = clip_vertex;
-	POSITION /= abs(POSITION.w);
+	POSITION = get_snapped_pos(PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0));  // snap position to grid
+	POSITION /= abs(POSITION.w);  // discard depth for affine mapping
 
 	if (y_billboard)
 	{
