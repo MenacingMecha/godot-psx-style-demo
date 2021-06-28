@@ -1,11 +1,10 @@
 shader_type spatial;
 render_mode diffuse_lambert_wrap, vertex_lighting, cull_disabled, shadows_disabled, depth_draw_opaque;
+// render_mode diffuse_lambert, vertex_lighting, cull_disabled, shadows_disabled, depth_draw_opaque;
 
 uniform float precision_multiplier : hint_range(0.0, 1.0) = 1.0;
 uniform vec4 modulate_color : hint_color = vec4(1.0);
-uniform vec4 metal_modulate_color : hint_color = vec4(1.0);
-uniform samplerCube cubemap;
-uniform vec3 cubemap_uv_scale = vec3(1.0);
+uniform sampler2D metal_tex : hint_albedo;
 uniform int color_depth = 15;
 uniform bool dither_enabled = true;
 uniform bool fog_enabled = true;
@@ -13,7 +12,6 @@ uniform vec4 fog_color : hint_color = vec4(0.5, 0.7, 1.0, 1.0);
 uniform float min_fog_distance : hint_range(0, 100) = 10;
 uniform float max_fog_distance : hint_range(0, 100) = 40;
 
-varying vec3 cubemap_UV;
 varying float fog_weight;
 varying float vertex_distance;
 
@@ -46,22 +44,6 @@ void vertex()
 
 	fog_weight = inv_lerp(min_fog_distance, max_fog_distance, vertex_distance);
 	fog_weight = clamp(fog_weight, 0, 1);
-
-	// define cubemap UV
-	// https://godotforums.org/discussion/15406/cubemap-reflections-cubic-environment-mapping
-	vec4 invcamx = INV_CAMERA_MATRIX[0];
-	vec4 invcamy = INV_CAMERA_MATRIX[1];
-	vec4 invcamz = INV_CAMERA_MATRIX[2];
-	vec4 invcamw = INV_CAMERA_MATRIX[3];
-
-	vec3 CameraPosition = -invcamw.xyz * mat3( invcamx.xyz, invcamy.xyz, invcamz.xyz );
-
-	vec3 vertexW = (WORLD_MATRIX * vec4(VERTEX, 0.0)).xyz; 		//vertex from model to world space
-	vec3 N = normalize(WORLD_MATRIX * vec4(NORMAL.x, NORMAL.y, NORMAL.z, 0.0)).xyz;	//normal from model space to world space
-	vec3 I = normalize(vertexW - CameraPosition);				//incident vector (from camera to vertex)
-	vec3 R = reflect(I, N);					//reflection vector (from vertex to cube map)
-	R.z *= -1.0;
-	cubemap_UV = R;
 }
 
 float get_dither_brightness(vec3 albedo, vec4 fragcoord)
@@ -107,8 +89,8 @@ vec3 band_color(vec3 _color, int num_of_colors)
 void fragment()
 {
 	ALBEDO = (COLOR * modulate_color).rgb;
-	vec4 cube_tex = texture(cubemap, cubemap_UV * cubemap_uv_scale) * metal_modulate_color;
-	ALBEDO *= cube_tex.rgb;
+	vec2 metal_uv = vec2(NORMAL.x / 2.0 + 0.5, (-NORMAL.y) / 2.0 + 0.5);  // Special thanks to Adam McLaughlan
+	ALBEDO *= (texture(metal_tex, metal_uv)).rgb;
 	ALBEDO = fog_enabled ? mix(ALBEDO, fog_color.rgb, fog_weight) : ALBEDO;
 	ALBEDO = dither_enabled ? ALBEDO * get_dither_brightness(ALBEDO, FRAGCOORD) : ALBEDO;
 	ALBEDO = band_color(ALBEDO, color_depth);
