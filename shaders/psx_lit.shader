@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode diffuse_lambert_wrap, vertex_lighting, cull_disabled, shadows_disabled, depth_draw_opaque;
+render_mode diffuse_lambert, vertex_lighting, cull_disabled, shadows_disabled, depth_draw_opaque;
 
 uniform float precision_multiplier : hint_range(0.0, 1.0) = 1.0;
 uniform vec4 modulate_color : hint_color = vec4(1.0);
