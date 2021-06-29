@@ -38,6 +38,3 @@ func set_ambient_light_color(color: Color):
 
 func set_ambient_energy(value: float):
 	environment.set_ambient_light_energy(value)
-
-func reset_rotation():
-	get_tree().reload_current_scene()

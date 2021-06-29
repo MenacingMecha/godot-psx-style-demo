@@ -378,19 +378,6 @@ margin_bottom = 15.0
 text = "0.15"
 script = ExtResource( 6 )
 
-[node name="HSeparator4" type="HSeparator" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
-margin_top = 256.0
-margin_right = 130.0
-margin_bottom = 260.0
-
-[node name="ResetButton" type="Button" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
-margin_top = 264.0
-margin_right = 130.0
-margin_bottom = 284.0
-focus_mode = 0
-enabled_focus_mode = 0
-text = "Reset Rotation"
-
 [connection signal="mouse_entered" from="GUILayer/VBoxContainer/ToggleOptions" to="GUILayer/VBoxContainer/ToggleOptions" method="set_self_modulate" flags=3 binds= [ Color( 1, 1, 1, 1 ) ]]
 [connection signal="mouse_exited" from="GUILayer/VBoxContainer/ToggleOptions" to="GUILayer/VBoxContainer/ToggleOptions" method="set_self_modulate" flags=3 binds= [ Color( 1, 1, 1, 0.392157 ) ]]
 [connection signal="toggled" from="GUILayer/VBoxContainer/ToggleOptions" to="GUILayer/VBoxContainer/OptionsPanel" method="set_visible" flags=3]
@@ -409,4 +396,3 @@ text = "Reset Rotation"
 [connection signal="color_changed" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/AmbientLight/ColorPickerButton" to="GUILayer/VBoxContainer/OptionsPanel" method="set_ambient_light_color" flags=3]
 [connection signal="value_changed" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/AmbientEnergy/HSlider" to="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/AmbientEnergy/Value" method="set_text_from_value" flags=3 binds= [ false ]]
 [connection signal="value_changed" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/AmbientEnergy/HSlider" to="GUILayer/VBoxContainer/OptionsPanel" method="set_ambient_energy" flags=3]
-[connection signal="pressed" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/ResetButton" to="GUILayer/VBoxContainer/OptionsPanel" method="reset_rotation" flags=3]
