@@ -8,15 +8,7 @@ uniform vec2 uv_scale = vec2(1.0, 1.0);
 uniform vec2 uv_offset = vec2(.0, .0);
 uniform bool billboard = false;
 uniform bool y_billboard = false;
-uniform int color_depth = 15;
 uniform float alpha_scissor : hint_range(0, 1) = 0.1;
-
-// https://stackoverflow.com/a/42470600
-vec4 band_color(vec4 _color, int num_of_colors)
-{
-	vec4 num_of_colors_vec = vec4(float(num_of_colors));
-	return floor(_color * num_of_colors_vec) / num_of_colors_vec;
-}
 
 // https://github.com/dsoft20/psx_retroshader/blob/master/Assets/Shaders/psx-vertexlit.shader
 const vec2 base_snap_res = vec2(160.0, 120.0);
@@ -53,13 +45,14 @@ void vertex()
 		MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat4(CAMERA_MATRIX[0],CAMERA_MATRIX[1],CAMERA_MATRIX[2],WORLD_MATRIX[3]);
 		MODELVIEW_MATRIX = MODELVIEW_MATRIX * mat4(vec4(length(WORLD_MATRIX[0].xyz), 0.0, 0.0, 0.0),vec4(0.0, length(WORLD_MATRIX[1].xyz), 0.0, 0.0),vec4(0.0, 0.0, length(WORLD_MATRIX[2].xyz), 0.0),vec4(0.0, 0.0, 0.0, 1.0));
 	}
+
+	VERTEX = VERTEX;  // it breaks without this
 }
 
 void fragment()
 {
 	vec4 tex = texture(albedoTex, UV) * modulate_color;
-	tex = band_color(tex, color_depth);
-	ALBEDO = tex.rgb;
 	ALPHA = tex.a;
+	ALBEDO = tex.rgb;
 	ALPHA_SCISSOR = alpha_scissor;
 }
