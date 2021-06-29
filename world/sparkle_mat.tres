@@ -11,6 +11,5 @@ shader_param/uv_scale = Vector2( 1, 1 )
 shader_param/uv_offset = Vector2( 0, 0 )
 shader_param/billboard = true
 shader_param/y_billboard = false
-shader_param/color_depth = 15
 shader_param/alpha_scissor = 0.1
 shader_param/albedoTex = ExtResource( 2 )

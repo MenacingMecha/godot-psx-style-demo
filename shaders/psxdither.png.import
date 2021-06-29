@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/floor.png-3fe60c123acb44f0e0e546b36d6ad955.stex"
+path="res://.import/psxdither.png-6c00fd8f19411080f93d281ca7da7716.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/floor.png"
-dest_files=[ "res://.import/floor.png-3fe60c123acb44f0e0e546b36d6ad955.stex" ]
+source_file="res://shaders/psxdither.png"
+dest_files=[ "res://.import/psxdither.png-6c00fd8f19411080f93d281ca7da7716.stex" ]
 
 [params]
 
@@ -19,16 +19,16 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=true
+flags/repeat=1
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
-flags/srgb=1
+flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
 stream=false
 size_limit=0
-detect_3d=false
+detect_3d=true
 svg/scale=1.0
