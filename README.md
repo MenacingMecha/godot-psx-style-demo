@@ -12,15 +12,13 @@ A collection of shaders and materials for Godot engine that aim to recreate the 
 - "Wobbly" texures through affine texture mapping
 - Limited color depth
 - Hardware dithering to hide color banding
-- Shiny chrome-like metallic surfaces based on cubemap reflections
+- Shiny chrome-like metallic surfaces
 - Billboard sprites
 - Fog to limit draw distance
 - LCD post-processing shader to emulate old displays
 
 ## Demo Controls
 
-- 1: Toggle post-process passes
-- 2: Toggle dithering
 - Space: Toggle camera and object movement
 - R: Reset scene
 
