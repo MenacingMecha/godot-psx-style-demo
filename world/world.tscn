@@ -1,6 +1,7 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://world/orbit_camera.gd" type="Script" id=1]
+[ext_resource path="res://world/light-shaft.glb" type="PackedScene" id=2]
 [ext_resource path="res://world/spatial_sin_pan.gd" type="Script" id=3]
 [ext_resource path="res://world/floor.tres" type="Material" id=4]
 [ext_resource path="res://world/object_mat.tres" type="Material" id=5]
@@ -8,6 +9,7 @@
 [ext_resource path="res://world/sparkle_mat.tres" type="Material" id=7]
 [ext_resource path="res://world/box.obj" type="ArrayMesh" id=8]
 [ext_resource path="res://world/object_metal_mat.tres" type="Material" id=9]
+[ext_resource path="res://shaders/psx_light-volume.shader" type="Shader" id=10]
 [ext_resource path="res://world/crystal/crystal_mesh.tscn" type="PackedScene" id=11]
 [ext_resource path="res://world/particle_reset.gd" type="Script" id=13]
 [ext_resource path="res://world/bevel-box.glb" type="PackedScene" id=14]
@@ -33,13 +35,17 @@ subdivide_depth = 25
 [sub_resource type="BoxShape" id=4]
 extents = Vector3( 3.0314, 1, 1 )
 
-[sub_resource type="CubeMesh" id=6]
+[sub_resource type="CubeMesh" id=5]
 material = ExtResource( 4 )
 flip_faces = true
 size = Vector3( 40, 40, 40 )
 subdivide_width = 25
 subdivide_height = 25
 subdivide_depth = 25
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = ExtResource( 10 )
+shader_param/precision_multiplier = 1.0
 
 [node name="World" type="Spatial"]
 
@@ -195,7 +201,14 @@ transform = Transform( -0.90227, 0, -0.431172, 0, 1, 0, 0.431172, 0, -0.90227, -
 
 [node name="Background" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0 )
-mesh = SubResource( 6 )
+mesh = SubResource( 5 )
 material/0 = null
 
+[node name="light-shaft" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0109267, 2.05731, 0.0147681 )
+
+[node name="Cube" parent="light-shaft" index="0"]
+material/0 = SubResource( 6 )
+
 [editable path="bevel-box"]
+[editable path="light-shaft"]
