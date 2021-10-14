@@ -2,8 +2,6 @@
 
 [Play demo in browser!](https://menacingmecha.itch.io/godot-psx-style-demo)
 
-![Preview GIF](./readme-assets/preview.gif)
-
 ![Example Screenshot](./readme-assets/screenshot.png)
 
 A collection of shaders and materials for Godot engine that aim to recreate the following aspects of the PS1 aesthetic:
