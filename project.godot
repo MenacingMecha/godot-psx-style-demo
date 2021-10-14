@@ -23,10 +23,8 @@ config/icon="res://readme-assets/screenshot.png"
 
 [display]
 
-window/size/width=768
-window/size/height=672
-window/size/test_width=768
-window/size/test_height=672
+window/size/width=960
+window/size/height=720
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 

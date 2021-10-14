@@ -23,7 +23,7 @@ __meta__ = {
 }
 
 [node name="Viewport" type="Viewport" parent="PSXLayer/BlurPostProcess"]
-size = Vector2( 768, 672 )
+size = Vector2( 960, 720 )
 handle_input_locally = false
 render_target_update_mode = 3
 audio_listener_enable_2d = true
@@ -40,7 +40,7 @@ __meta__ = {
 }
 
 [node name="Viewport" type="Viewport" parent="PSXLayer/BlurPostProcess/Viewport/LCDOverlay"]
-size = Vector2( 768, 672 )
+size = Vector2( 960, 720 )
 handle_input_locally = false
 render_target_update_mode = 3
 audio_listener_enable_2d = true
@@ -58,7 +58,7 @@ __meta__ = {
 }
 
 [node name="Viewport" type="Viewport" parent="PSXLayer/BlurPostProcess/Viewport/LCDOverlay/Viewport/DitherBanding"]
-size = Vector2( 256, 224 )
+size = Vector2( 320, 240 )
 handle_input_locally = false
 render_target_update_mode = 3
 audio_listener_enable_2d = true
@@ -81,7 +81,7 @@ __meta__ = {
 
 [node name="ToggleOptions" type="Button" parent="GUILayer/VBoxContainer"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_right = 138.0
+margin_right = 146.0
 margin_bottom = 20.0
 focus_mode = 0
 toggle_mode = true
