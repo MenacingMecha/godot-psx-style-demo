@@ -39,3 +39,13 @@ A collection of shaders and materials for Godot engine that aim to recreate the 
 Originally based on: https://github.com/marmitoTH/godot-psx-shaders
 
 Floor texture (available under CC-0): https://stealthix.itch.io/rpg-nature-tileset
+
+## Games using these shaders (in some form)
+- [Isle of Dreamers](https://menacingmecha.itch.io/isle-of-dreamers) - [MenacingMecha](https://menacingmecha.github.io/)
+- [Inktober 2020 Demo Disc](https://menacingmecha.itch.io/inktober-2020-demo-disc) - [MenacingMecha](https://menacingmecha.github.io/)
+- [Please Don't Feed the Creatures of the Deep](https://vaporshark.itch.io/please-dont-feed-the-creatures-of-the-deep) - [VaporShark](https://vaporshark.itch.io/)
+- [Headlines from the Deep](https://menacingmecha.itch.io/headlines-from-the-deep) - [MenacingMecha](https://menacingmecha.github.io/)
+- [Beetlebum](https://menacingmecha.itch.io/beetlebum) - [MenacingMecha](https://menacingmecha.github.io/)
+- [P.O.S.S.U.M.](https://vaporshark.itch.io/possum) - [VaporShark](https://vaporshark.itch.io/)
+
+Please submit a PR (or send a message) if you have a title to add!
