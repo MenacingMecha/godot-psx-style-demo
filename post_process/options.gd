@@ -14,6 +14,12 @@ func set_fov(value: int):
 func set_post_process(enabled: bool):
 	post_process_lcd.set_shader_param("enabled", enabled)
 	post_process_blur.set_shader_param("enabled", enabled)
+	
+func set_lcd_opacity(value: float):
+	post_process_lcd.set_shader_param("lcd_opacity",value)
+	
+func set_lcd_scanline_gap(value: int):
+	post_process_lcd.set_shader_param("scanline_gap",value)
 
 func set_color_depth(value: int):
 	post_process_dither_band.set_shader_param("col_depth", value)
