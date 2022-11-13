@@ -47,5 +47,6 @@ Floor texture (available under CC-0): https://stealthix.itch.io/rpg-nature-tiles
 - [Headlines from the Deep](https://menacingmecha.itch.io/headlines-from-the-deep) - [MenacingMecha](https://menacingmecha.github.io/)
 - [Beetlebum](https://menacingmecha.itch.io/beetlebum) - [MenacingMecha](https://menacingmecha.github.io/)
 - [P.O.S.S.U.M.](https://vaporshark.itch.io/possum) - [VaporShark](https://vaporshark.itch.io/)
+- [The Deep Ones](https://bronxtaco.itch.io/the-deep-ones) - [bronxtaco](https://bronxtaco.itch.io/)
 
 Please submit a PR (or send a message) if you have a title to add!
