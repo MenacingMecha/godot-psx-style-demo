@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/bevel-box.obj-2d77b792fd40460e3d62c1e48f4c0481.mesh"
+
+[deps]
+
+files=[ "res://.import/bevel-box.obj-2d77b792fd40460e3d62c1e48f4c0481.mesh" ]
+
+source_file="res://world/bevel-box.obj"
+dest_files=[ "res://.import/bevel-box.obj-2d77b792fd40460e3d62c1e48f4c0481.mesh", "res://.import/bevel-box.obj-2d77b792fd40460e3d62c1e48f4c0481.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286
