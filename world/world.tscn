@@ -202,7 +202,6 @@ transform = Transform( -0.90227, 0, -0.431172, 0, 1, 0, 0.431172, 0, -0.90227, -
 [node name="Background" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0 )
 mesh = SubResource( 5 )
-material/0 = null
 
 [node name="light-shaft" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0109267, 2.05731, 0.0147681 )
