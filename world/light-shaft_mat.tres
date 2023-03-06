@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://shaders/psx_light-volume.shader" type="Shader" id=1]
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/precision_multiplier = 1.0
