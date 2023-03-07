@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://world/orbit_camera.gd" type="Script" id=1]
 [ext_resource path="res://world/light-shaft_mat.tres" type="Material" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://world/crystal/crystal_mesh.tscn" type="PackedScene" id=11]
 [ext_resource path="res://world/bevel-box.obj" type="ArrayMesh" id=12]
 [ext_resource path="res://world/particle_reset.gd" type="Script" id=13]
+[ext_resource path="res://world/scene_controls.gd" type="Script" id=14]
 [ext_resource path="res://world/world_env.tres" type="Environment" id=15]
 
 [sub_resource type="ParticlesMaterial" id=1]
@@ -45,12 +46,12 @@ subdivide_depth = 25
 
 [node name="World" type="Spatial"]
 
-[node name="BoxMetal" type="MeshInstance" parent="."]
+[node name="BoxMetal" type="MeshInstance" parent="." groups=["can_pause_and_reset"]]
 transform = Transform( 0.613118, 0, 0, 0, 0.613118, 0, 0, 0, 0.613118, -1, 2.236, 0 )
 mesh = ExtResource( 12 )
 material/0 = ExtResource( 9 )
 script = ExtResource( 3 )
-shadow_path = NodePath("../BoxMetalShadow")
+_shadow_path = NodePath("../BoxMetalShadow")
 
 [node name="Particles" type="Particles" parent="BoxMetal"]
 transform = Transform( 0.999973, 0.00729208, -0.00112456, -0.00729237, 0.999973, -0.000250523, 0.00112271, 0.000258713, 0.999999, 0, 0, 0 )
@@ -61,13 +62,13 @@ script = ExtResource( 13 )
 [node name="BoxMetalShadow" parent="." instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0 )
 
-[node name="BoxLit" type="MeshInstance" parent="."]
+[node name="BoxLit" type="MeshInstance" parent="." groups=["can_pause_and_reset"]]
 transform = Transform( 0.613118, 0, 0, 0, 0.613118, 0, 0, 0, 0.613118, 1, 2.236, 0 )
 mesh = ExtResource( 8 )
 material/0 = ExtResource( 5 )
 script = ExtResource( 3 )
-shadow_path = NodePath("../BoxLitShadow")
-translation_distance = -0.5
+_shadow_path = NodePath("../BoxLitShadow")
+_reverse_direction = true
 
 [node name="BoxLitShadow" parent="." instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
@@ -189,3 +190,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0109267, 2.05731, 0.0147681 
 mesh = ExtResource( 10 )
 skeleton = NodePath("")
 material/0 = ExtResource( 2 )
+
+[node name="SceneControls" type="Node" parent="."]
+script = ExtResource( 14 )

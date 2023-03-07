@@ -11,8 +11,6 @@ subdivide_depth = 1
 [node name="BoxShadow" type="Spatial"]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
 script = ExtResource( 2 )
-scale_min = 0.5
-scale_max = 1.4
 max_distance_from_ground = 3.0
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
