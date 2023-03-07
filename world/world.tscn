@@ -59,7 +59,7 @@ draw_pass_1 = SubResource( 2 )
 script = ExtResource( 13 )
 
 [node name="BoxMetalShadow" parent="." instance=ExtResource( 6 )]
-transform = Transform( 3.2649, 0, 0, 0, -1.42713e-07, 1, 0, -3.2649, -4.37114e-08, -1.05202, 0.507847, 0.0395253 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0 )
 
 [node name="BoxLit" type="MeshInstance" parent="."]
 transform = Transform( 0.613118, 0, 0, 0, 0.613118, 0, 0, 0, 0.613118, 1, 2.236, 0 )
@@ -70,7 +70,7 @@ shadow_path = NodePath("../BoxLitShadow")
 translation_distance = -0.5
 
 [node name="BoxLitShadow" parent="." instance=ExtResource( 6 )]
-transform = Transform( 3.2649, 0, 0, 0, -1.42713e-07, 1, 0, -3.2649, -4.37114e-08, 0.651182, 0.507847, 0.572559 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
 
 [node name="Floor" type="MeshInstance" parent="."]
 visible = false
