@@ -51,7 +51,6 @@ transform = Transform( 0.613118, 0, 0, 0, 0.613118, 0, 0, 0, 0.613118, -1, 2.236
 mesh = ExtResource( 12 )
 material/0 = ExtResource( 9 )
 script = ExtResource( 3 )
-_shadow_path = NodePath("../BoxMetalShadow")
 
 [node name="Particles" type="Particles" parent="BoxMetal"]
 transform = Transform( 0.999973, 0.00729208, -0.00112456, -0.00729237, 0.999973, -0.000250523, 0.00112271, 0.000258713, 0.999999, 0, 0, 0 )
@@ -67,11 +66,11 @@ transform = Transform( 0.613118, 0, 0, 0, 0.613118, 0, 0, 0, 0.613118, 1, 2.236,
 mesh = ExtResource( 8 )
 material/0 = ExtResource( 5 )
 script = ExtResource( 3 )
-_shadow_path = NodePath("../BoxLitShadow")
 _reverse_direction = true
 
 [node name="BoxLitShadow" parent="." instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+_reverse_direction = true
 
 [node name="Floor" type="MeshInstance" parent="."]
 visible = false

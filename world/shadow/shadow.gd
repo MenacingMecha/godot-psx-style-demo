@@ -1,18 +1,33 @@
 extends Spatial
 
-const SCALE_MIN := 0.5
-const SCALE_MAX := 1.4
+const SpatialSinPan := preload("res://world/spatial_sin_pan.gd")
 
-export(float, 1, 10) var max_distance_from_ground = 2
-export(float, 0, -2) var position_offset = -0.2
+const SCALE_DISTANCE := 0.125
+const DEFAULT_SCALE := Vector3.ONE * 0.775
+
+export var _reverse_direction := false
+
+var _time := 0.0
+
+onready var _default_scale := self.scale
 
 
-func update_shadow(origin_position: Vector3, distance_from_ground: float) -> void:
-	# set shadow position
-#	translation = origin_position + Vector3(0, distance_from_ground - position_offset, 0)
+func _process(p_delta: float):
+	self._time += p_delta
+	self.scale = get_animated_scale(self._time, self._reverse_direction)
 
-	# set shadow scale
-	var clamped_distance_from_ground = max(distance_from_ground * -1, max_distance_from_ground)
-	var distance_weight = min(distance_from_ground * -1 / max_distance_from_ground, 1)
-	var scale_multiplier = lerp(SCALE_MAX, SCALE_MIN, distance_weight)
-	scale = Vector3(scale_multiplier, scale_multiplier, scale_multiplier)
+
+func on_reset():
+	self.scale = self._default_scale
+	self._time = 0.0
+
+
+static func get_animated_scale(p_time: float, p_reverse_direction: bool) -> Vector3:
+	var direction := 1 if p_reverse_direction else -1
+	var offset_scale := (
+		sin(p_time * SpatialSinPan.TRANSLATION_SPEED)
+		* Vector3.ONE
+		* SCALE_DISTANCE
+		* direction
+	)
+	return DEFAULT_SCALE + offset_scale
