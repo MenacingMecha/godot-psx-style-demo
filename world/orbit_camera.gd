@@ -1,13 +1,17 @@
 extends Spatial
 
-export (float, 0, 3) var speed = 1
-export (bool) var rotate_camera = true
+const ROTATION_SPEED := 1.0
 
-onready var default_y_rotation : float = rotation.y
+var _time = 0.0
 
-func _process(delta):
-	if Input.is_action_just_pressed("ui_accept"):
-		rotate_camera = !rotate_camera
-	if Input.is_action_just_pressed("reset_camera_position"):
-		rotation.y = default_y_rotation
-	rotate_y(1 * speed * delta * float(rotate_camera))
+onready var _default_y_rotation: float = rotation.y
+
+
+func _process(p_delta: float):
+	self._time += p_delta
+	self.rotation.y = self._default_y_rotation + self._time * ROTATION_SPEED
+
+
+func restart():
+	self.rotation.y = self._default_y_rotation
+	self._time = 0.0

@@ -129,7 +129,7 @@ material/0 = ExtResource( 4 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.993481, 0 )
 shape = SubResource( 4 )
 
-[node name="OrbitPoint" type="Spatial" parent="."]
+[node name="OrbitPoint" type="Spatial" parent="." groups=["can_pause", "can_restart"]]
 transform = Transform( 0.831023, 0, -0.556238, 0, 1, 0, 0.556238, 0, 0.831023, 0, -2.38419e-07, -4.76837e-07 )
 script = ExtResource( 1 )
 
