@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bni0eo5gi5ho4"]
+
+[ext_resource type="Shader" path="res://shaders/lcd_post_process.gdshader" id="1_b6j3k"]
+
+[resource]
+shader = ExtResource("1_b6j3k")
+shader_parameter/enabled = false
+shader_parameter/lcd_opacity = 0.5
+shader_parameter/scanline_gap = 4

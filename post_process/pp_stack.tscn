@@ -1,469 +1,263 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://cs8d3xn2towo"]
 
-[ext_resource path="res://post_process/pp_dither.tres" type="Material" id=1]
-[ext_resource path="res://post_process/pp_blur_mat.tres" type="Material" id=2]
-[ext_resource path="res://post_process/pp_lcd_mat.tres" type="Material" id=3]
-[ext_resource path="res://world/world.tscn" type="PackedScene" id=4]
-[ext_resource path="res://world/world_env.tres" type="Environment" id=5]
-[ext_resource path="res://post_process/value_label.gd" type="Script" id=6]
-[ext_resource path="res://post_process/options.gd" type="Script" id=8]
+[ext_resource type="Shader" path="res://shaders/lcd_post_process.gdshader" id="1_8n2w8"]
+[ext_resource type="Environment" path="res://world/world_env.tres" id="5"]
+[ext_resource type="Script" path="res://post_process/value_label.gd" id="6"]
+[ext_resource type="Script" path="res://post_process/options.gd" id="8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sq183"]
+shader = ExtResource("1_8n2w8")
+shader_parameter/enabled = false
+shader_parameter/lcd_opacity = 0.5
+shader_parameter/scanline_gap = 4
 
 [node name="Node" type="Node"]
 
 [node name="PSXLayer" type="CanvasLayer" parent="."]
 layer = 0
 
-[node name="BlurPostProcess" type="ViewportContainer" parent="PSXLayer"]
-material = ExtResource( 2 )
+[node name="BlurPostProcess" type="SubViewportContainer" parent="PSXLayer"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Viewport" type="Viewport" parent="PSXLayer/BlurPostProcess"]
-size = Vector2( 960, 720 )
+[node name="Viewport" type="SubViewport" parent="PSXLayer/BlurPostProcess"]
 handle_input_locally = false
-render_target_update_mode = 3
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
+size = Vector2i(960, 720)
+render_target_update_mode = 4
 
-[node name="LCDOverlay" type="ViewportContainer" parent="PSXLayer/BlurPostProcess/Viewport"]
-material = ExtResource( 3 )
+[node name="LCDOverlay" type="SubViewportContainer" parent="PSXLayer/BlurPostProcess/Viewport"]
+material = SubResource("ShaderMaterial_sq183")
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 stretch = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Viewport" type="Viewport" parent="PSXLayer/BlurPostProcess/Viewport/LCDOverlay"]
-size = Vector2( 960, 720 )
+[node name="Viewport" type="SubViewport" parent="PSXLayer/BlurPostProcess/Viewport/LCDOverlay"]
 handle_input_locally = false
-render_target_update_mode = 3
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
+size = Vector2i(960, 720)
+render_target_update_mode = 4
 
-[node name="DitherBanding" type="ViewportContainer" parent="PSXLayer/BlurPostProcess/Viewport/LCDOverlay/Viewport"]
-material = ExtResource( 1 )
+[node name="DitherBanding" type="SubViewportContainer" parent="PSXLayer/BlurPostProcess/Viewport/LCDOverlay/Viewport"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 stretch = true
 stretch_shrink = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Viewport" type="Viewport" parent="PSXLayer/BlurPostProcess/Viewport/LCDOverlay/Viewport/DitherBanding"]
-size = Vector2( 320, 240 )
+[node name="Viewport" type="SubViewport" parent="PSXLayer/BlurPostProcess/Viewport/LCDOverlay/Viewport/DitherBanding"]
 handle_input_locally = false
-render_target_update_mode = 3
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
+size = Vector2i(320, 240)
+render_target_update_mode = 4
 
-[node name="World" parent="PSXLayer/BlurPostProcess/Viewport/LCDOverlay/Viewport/DitherBanding/Viewport" instance=ExtResource( 4 )]
-
-[node name="GUILayer" type="CanvasLayer" parent="."]
-layer = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="GUILayer"]
+[node name="GUILayer@VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = -1
 anchor_left = 0.01
 anchor_top = 0.01
 anchor_right = 0.05
 anchor_bottom = 0.98
-margin_right = 108.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="ToggleOptions" type="Button" parent="GUILayer/VBoxContainer"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_right = 146.0
-margin_bottom = 20.0
+[node name="GUILayer@VBoxContainer@ToggleOptions" type="Button" parent="."]
+self_modulate = Color(1, 1, 1, 0.392157)
 focus_mode = 0
 toggle_mode = true
 text = "Toggle Options"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="OptionsPanel" type="Panel" parent="GUILayer/VBoxContainer"]
+[node name="GUILayer@VBoxContainer@OptionsPanel" type="Panel" parent="."]
 visible = false
-self_modulate = Color( 1, 1, 1, 0.392157 )
-margin_top = 24.0
-margin_right = 146.0
-margin_bottom = 698.0
+self_modulate = Color(1, 1, 1, 0.392157)
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource( 8 )
-post_process_lcd = ExtResource( 3 )
-post_process_blur = ExtResource( 2 )
-post_process_dither_band = ExtResource( 1 )
-environment = ExtResource( 5 )
+script = ExtResource("8")
+post_process_lcd = null
+post_process_blur = null
+post_process_dither_band = null
+environment = ExtResource("5")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel"]
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
 
-[node name="FPS" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
-margin_right = 138.0
-margin_bottom = 16.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FPS" type="HBoxContainer" parent="."]
 
-[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FPS"]
-margin_top = 1.0
-margin_right = 22.0
-margin_bottom = 15.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FPS@Title" type="Label" parent="."]
 text = "FPS"
 
-[node name="HSlider" type="HSlider" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FPS"]
-margin_left = 26.0
-margin_right = 118.0
-margin_bottom = 16.0
-focus_mode = 0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FPS@HSlider" type="HSlider" parent="."]
 size_flags_horizontal = 3
+focus_mode = 0
 min_value = 10.0
 max_value = 60.0
 value = 24.0
 
-[node name="Value" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FPS"]
-margin_left = 122.0
-margin_top = 1.0
-margin_right = 138.0
-margin_bottom = 15.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FPS@Value" type="Label" parent="."]
 text = "24"
-script = ExtResource( 6 )
+script = ExtResource("6")
 
-[node name="HSeparator2" type="HSeparator" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
-margin_top = 20.0
-margin_right = 138.0
-margin_bottom = 24.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@HSeparator2" type="HSeparator" parent="."]
 
-[node name="ColorDepth" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
-margin_top = 28.0
-margin_right = 138.0
-margin_bottom = 44.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@ColorDepth" type="HBoxContainer" parent="."]
 
-[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/ColorDepth"]
-margin_top = 1.0
-margin_right = 67.0
-margin_bottom = 15.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@ColorDepth@Title" type="Label" parent="."]
 text = "Col. Depth"
 
-[node name="HSlider" type="HSlider" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/ColorDepth"]
-margin_left = 71.0
-margin_right = 118.0
-margin_bottom = 16.0
-focus_mode = 0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@ColorDepth@HSlider" type="HSlider" parent="."]
 size_flags_horizontal = 3
+focus_mode = 0
 min_value = 1.0
 max_value = 32.0
 value = 15.0
 
-[node name="Value" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/ColorDepth"]
-margin_left = 122.0
-margin_top = 1.0
-margin_right = 138.0
-margin_bottom = 15.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@ColorDepth@Value" type="Label" parent="."]
 text = "15"
-script = ExtResource( 6 )
+script = ExtResource("6")
 
-[node name="DitherBanding" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
-margin_top = 48.0
-margin_right = 138.0
-margin_bottom = 72.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@DitherBanding" type="HBoxContainer" parent="."]
 
-[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/DitherBanding"]
-margin_top = 5.0
-margin_right = 95.0
-margin_bottom = 19.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@DitherBanding@Title" type="Label" parent="."]
 text = "Dither Banding"
 
-[node name="CheckBox" type="CheckBox" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/DitherBanding"]
-margin_left = 114.0
-margin_right = 138.0
-margin_bottom = 24.0
-focus_mode = 0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@DitherBanding@CheckBox" type="CheckBox" parent="."]
 size_flags_horizontal = 10
-pressed = true
-enabled_focus_mode = 0
+focus_mode = 0
 
-[node name="HSeparator4" type="HSeparator" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
-margin_top = 76.0
-margin_right = 138.0
-margin_bottom = 80.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@HSeparator4" type="HSeparator" parent="."]
 
-[node name="LCDOverlay" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
-margin_top = 84.0
-margin_right = 138.0
-margin_bottom = 108.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDOverlay" type="HBoxContainer" parent="."]
 
-[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDOverlay"]
-margin_top = 5.0
-margin_right = 78.0
-margin_bottom = 19.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDOverlay@Title" type="Label" parent="."]
 text = "LCD Overlay"
 
-[node name="CheckBox" type="CheckBox" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDOverlay"]
-margin_left = 114.0
-margin_right = 138.0
-margin_bottom = 24.0
-focus_mode = 0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDOverlay@CheckBox" type="CheckBox" parent="."]
 size_flags_horizontal = 10
-enabled_focus_mode = 0
+focus_mode = 0
 
-[node name="LCDOpacity" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDOpacity" type="HBoxContainer" parent="."]
 visible = false
-margin_top = 112.0
-margin_right = 138.0
-margin_bottom = 128.0
 
-[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDOpacity"]
-margin_top = 1.0
-margin_right = 49.0
-margin_bottom = 15.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDOpacity@Title" type="Label" parent="."]
 text = "Opacity"
 
-[node name="HSlider" type="HSlider" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDOpacity"]
-margin_left = 53.0
-margin_right = 114.0
-margin_bottom = 16.0
-focus_mode = 0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDOpacity@HSlider" type="HSlider" parent="."]
 size_flags_horizontal = 3
+focus_mode = 0
 max_value = 1.0
 step = 0.01
 value = 0.5
 
-[node name="Value" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDOpacity"]
-margin_left = 118.0
-margin_top = 1.0
-margin_right = 138.0
-margin_bottom = 15.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDOpacity@Value" type="Label" parent="."]
 text = "0.5"
-script = ExtResource( 6 )
+script = ExtResource("6")
 
-[node name="LCDScanlineGap" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDScanlineGap" type="HBoxContainer" parent="."]
 visible = false
-margin_top = 132.0
-margin_right = 138.0
-margin_bottom = 148.0
 
-[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDScanlineGap"]
-margin_top = 1.0
-margin_right = 62.0
-margin_bottom = 15.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDScanlineGap@Title" type="Label" parent="."]
 text = "Scan. Gap"
 
-[node name="HSlider" type="HSlider" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDScanlineGap"]
-margin_left = 66.0
-margin_right = 118.0
-margin_bottom = 16.0
-focus_mode = 0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDScanlineGap@HSlider" type="HSlider" parent="."]
 size_flags_horizontal = 3
+focus_mode = 0
 max_value = 16.0
 value = 4.0
 rounded = true
 
-[node name="Value" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDScanlineGap"]
-margin_left = 122.0
-margin_top = 1.0
-margin_right = 138.0
-margin_bottom = 15.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDScanlineGap@Value" type="Label" parent="."]
 text = "04"
-script = ExtResource( 6 )
+script = ExtResource("6")
 
-[node name="HSeparator" type="HSeparator" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
-margin_top = 152.0
-margin_right = 138.0
-margin_bottom = 156.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@HSeparator" type="HSeparator" parent="."]
 
-[node name="Fog" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
-margin_top = 160.0
-margin_right = 138.0
-margin_bottom = 184.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@Fog" type="HBoxContainer" parent="."]
 
-[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/Fog"]
-margin_top = 5.0
-margin_right = 22.0
-margin_bottom = 19.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@Fog@Title" type="Label" parent="."]
 text = "Fog"
 
-[node name="CheckBox" type="CheckBox" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/Fog"]
-margin_left = 114.0
-margin_right = 138.0
-margin_bottom = 24.0
-focus_mode = 0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@Fog@CheckBox" type="CheckBox" parent="."]
 size_flags_horizontal = 10
-pressed = true
-enabled_focus_mode = 0
+focus_mode = 0
 
-[node name="FogColor" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
-margin_top = 188.0
-margin_right = 138.0
-margin_bottom = 208.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogColor" type="HBoxContainer" parent="."]
 
-[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogColor"]
-margin_top = 3.0
-margin_right = 59.0
-margin_bottom = 17.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogColor@Title" type="Label" parent="."]
 size_flags_horizontal = 5
 text = "Fog Color"
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogColor"]
-margin_left = 63.0
-margin_right = 138.0
-margin_bottom = 20.0
-focus_mode = 0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogColor@ColorPickerButton" type="ColorPickerButton" parent="."]
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.8
-enabled_focus_mode = 0
-color = Color( 0.666667, 0.764706, 1, 0.960784 )
+focus_mode = 0
+color = Color(0.666667, 0.764706, 1, 0.960784)
 
-[node name="FogBegin" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
-margin_top = 212.0
-margin_right = 138.0
-margin_bottom = 228.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogBegin" type="HBoxContainer" parent="."]
 
-[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogBegin"]
-margin_top = 1.0
-margin_right = 36.0
-margin_bottom = 15.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogBegin@Title" type="Label" parent="."]
 text = "Begin"
 
-[node name="HSlider" type="HSlider" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogBegin"]
-margin_left = 40.0
-margin_right = 118.0
-margin_bottom = 16.0
-focus_mode = 0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogBegin@HSlider" type="HSlider" parent="."]
 size_flags_horizontal = 3
+focus_mode = 0
 min_value = 1.0
 max_value = 30.0
 value = 6.0
 
-[node name="Value" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogBegin"]
-margin_left = 122.0
-margin_top = 1.0
-margin_right = 138.0
-margin_bottom = 15.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogBegin@Value" type="Label" parent="."]
 text = "06"
-script = ExtResource( 6 )
+script = ExtResource("6")
 
-[node name="FogEnd" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
-margin_top = 232.0
-margin_right = 138.0
-margin_bottom = 248.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogEnd" type="HBoxContainer" parent="."]
 
-[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogEnd"]
-margin_top = 1.0
-margin_right = 35.0
-margin_bottom = 15.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogEnd@Title" type="Label" parent="."]
 text = "End   "
 
-[node name="HSlider" type="HSlider" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogEnd"]
-margin_left = 39.0
-margin_right = 118.0
-margin_bottom = 16.0
-focus_mode = 0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogEnd@HSlider" type="HSlider" parent="."]
 size_flags_horizontal = 3
+focus_mode = 0
 min_value = 1.0
 max_value = 30.0
 value = 15.0
 
-[node name="Value" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogEnd"]
-margin_left = 122.0
-margin_top = 1.0
-margin_right = 138.0
-margin_bottom = 15.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogEnd@Value" type="Label" parent="."]
 text = "15"
-script = ExtResource( 6 )
+script = ExtResource("6")
 
-[node name="HSeparator3" type="HSeparator" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
-margin_top = 252.0
-margin_right = 138.0
-margin_bottom = 256.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@HSeparator3" type="HSeparator" parent="."]
 
-[node name="AmbientLight" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
-margin_top = 260.0
-margin_right = 138.0
-margin_bottom = 280.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@AmbientLight" type="HBoxContainer" parent="."]
 
-[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/AmbientLight"]
-margin_top = 3.0
-margin_right = 90.0
-margin_bottom = 17.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@AmbientLight@Title" type="Label" parent="."]
 size_flags_horizontal = 3
 text = "Ambient Light"
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/AmbientLight"]
-margin_left = 94.0
-margin_right = 138.0
-margin_bottom = 20.0
-focus_mode = 0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@AmbientLight@ColorPickerButton" type="ColorPickerButton" parent="."]
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.8
-enabled_focus_mode = 0
-color = Color( 1, 0.67451, 0.988235, 1 )
+focus_mode = 0
+color = Color(1, 0.67451, 0.988235, 1)
 edit_alpha = false
 
-[node name="AmbientEnergy" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
-margin_top = 284.0
-margin_right = 138.0
-margin_bottom = 300.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@AmbientEnergy" type="HBoxContainer" parent="."]
 
-[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/AmbientEnergy"]
-margin_top = 1.0
-margin_right = 42.0
-margin_bottom = 15.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@AmbientEnergy@Title" type="Label" parent="."]
 text = "Energy"
 
-[node name="HSlider" type="HSlider" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/AmbientEnergy"]
-margin_left = 46.0
-margin_right = 106.0
-margin_bottom = 16.0
-focus_mode = 0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@AmbientEnergy@HSlider" type="HSlider" parent="."]
 size_flags_horizontal = 3
+focus_mode = 0
 max_value = 0.5
 step = 0.01
 value = 0.15
 
-[node name="Value" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/AmbientEnergy"]
-margin_left = 110.0
-margin_top = 1.0
-margin_right = 138.0
-margin_bottom = 15.0
+[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@AmbientEnergy@Value" type="Label" parent="."]
 text = "0.15"
-script = ExtResource( 6 )
-
-[connection signal="mouse_entered" from="GUILayer/VBoxContainer/ToggleOptions" to="GUILayer/VBoxContainer/ToggleOptions" method="set_self_modulate" flags=3 binds= [ Color( 1, 1, 1, 1 ) ]]
-[connection signal="mouse_exited" from="GUILayer/VBoxContainer/ToggleOptions" to="GUILayer/VBoxContainer/ToggleOptions" method="set_self_modulate" flags=3 binds= [ Color( 1, 1, 1, 0.392157 ) ]]
-[connection signal="toggled" from="GUILayer/VBoxContainer/ToggleOptions" to="GUILayer/VBoxContainer/OptionsPanel" method="set_visible" flags=3]
-[connection signal="value_changed" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FPS/HSlider" to="GUILayer/VBoxContainer/OptionsPanel" method="set_fov" flags=3]
-[connection signal="value_changed" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FPS/HSlider" to="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FPS/Value" method="set_text_from_value" flags=3]
-[connection signal="value_changed" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/ColorDepth/HSlider" to="GUILayer/VBoxContainer/OptionsPanel" method="set_color_depth" flags=3]
-[connection signal="value_changed" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/ColorDepth/HSlider" to="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/ColorDepth/Value" method="set_text_from_value" flags=3]
-[connection signal="toggled" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/DitherBanding/CheckBox" to="GUILayer/VBoxContainer/OptionsPanel" method="set_dither_banding" flags=3]
-[connection signal="toggled" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDOverlay/CheckBox" to="GUILayer/VBoxContainer/OptionsPanel" method="set_post_process" flags=3]
-[connection signal="toggled" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDOverlay/CheckBox" to="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDOpacity" method="set_visible" flags=3]
-[connection signal="toggled" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDOverlay/CheckBox" to="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDScanlineGap" method="set_visible" flags=3]
-[connection signal="value_changed" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDOpacity/HSlider" to="GUILayer/VBoxContainer/OptionsPanel" method="set_lcd_opacity" flags=3]
-[connection signal="value_changed" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDOpacity/HSlider" to="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDOpacity/Value" method="set_text_from_value" flags=3 binds= [ false ]]
-[connection signal="value_changed" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDScanlineGap/HSlider" to="GUILayer/VBoxContainer/OptionsPanel" method="set_lcd_scanline_gap" flags=3]
-[connection signal="value_changed" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDScanlineGap/HSlider" to="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDScanlineGap/Value" method="set_text_from_value" flags=3 binds= [ true ]]
-[connection signal="toggled" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/Fog/CheckBox" to="GUILayer/VBoxContainer/OptionsPanel" method="set_fog_enabled" flags=3]
-[connection signal="toggled" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/Fog/CheckBox" to="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogColor" method="set_visible" flags=3]
-[connection signal="toggled" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/Fog/CheckBox" to="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogBegin" method="set_visible" flags=3]
-[connection signal="toggled" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/Fog/CheckBox" to="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogEnd" method="set_visible" flags=3]
-[connection signal="color_changed" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogColor/ColorPickerButton" to="GUILayer/VBoxContainer/OptionsPanel" method="set_fog_color" flags=3]
-[connection signal="value_changed" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogBegin/HSlider" to="GUILayer/VBoxContainer/OptionsPanel" method="set_fog_depth_begin" flags=3]
-[connection signal="value_changed" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogBegin/HSlider" to="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogBegin/Value" method="set_text_from_value" flags=3]
-[connection signal="value_changed" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogEnd/HSlider" to="GUILayer/VBoxContainer/OptionsPanel" method="set_fog_depth_end" flags=3]
-[connection signal="value_changed" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogEnd/HSlider" to="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogEnd/Value" method="set_text_from_value" flags=3]
-[connection signal="color_changed" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/AmbientLight/ColorPickerButton" to="GUILayer/VBoxContainer/OptionsPanel" method="set_ambient_light_color" flags=3]
-[connection signal="value_changed" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/AmbientEnergy/HSlider" to="GUILayer/VBoxContainer/OptionsPanel" method="set_ambient_energy" flags=3]
-[connection signal="value_changed" from="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/AmbientEnergy/HSlider" to="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/AmbientEnergy/Value" method="set_text_from_value" flags=3 binds= [ false ]]
+script = ExtResource("6")
