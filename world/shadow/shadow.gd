@@ -9,7 +9,9 @@ export var _reverse_direction := false
 
 var _time := 0.0
 
-onready var _default_scale := self.scale
+
+func _ready():
+	self.scale = DEFAULT_SCALE
 
 
 func _process(p_delta: float):
@@ -17,8 +19,8 @@ func _process(p_delta: float):
 	self.scale = get_animated_scale(self._time, self._reverse_direction)
 
 
-func on_reset():
-	self.scale = self._default_scale
+func restart():
+	self.scale = DEFAULT_SCALE
 	self._time = 0.0
 
 
