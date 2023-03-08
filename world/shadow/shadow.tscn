@@ -8,7 +8,7 @@ material = ExtResource( 1 )
 subdivide_width = 1
 subdivide_depth = 1
 
-[node name="BoxShadow" type="Spatial" groups=["can_pause_and_reset"]]
+[node name="BoxShadow" type="Spatial" groups=["can_pause", "can_restart"]]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
 script = ExtResource( 2 )
 

@@ -18,7 +18,7 @@ func _process(p_delta: float):
 	)
 
 
-func on_reset():
+func restart():
 	set_transform(self._default_transform)
 	self._time = 0
 

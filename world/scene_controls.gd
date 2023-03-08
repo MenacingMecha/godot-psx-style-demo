@@ -5,16 +5,17 @@ signal reset
 
 const PAUSE_ACTION := "ui_accept"
 const RESET_ACTION := "reset_camera_position"
-const CAN_PAUSE_AND_RESET_NODE_GROUP := "can_pause_and_reset"
 
 var _is_paused := false setget _set_is_paused
 
 
 func _ready():
-	for node in get_tree().get_nodes_in_group(CAN_PAUSE_AND_RESET_NODE_GROUP):
+	for node in get_tree().get_nodes_in_group("can_pause"):
 		connect("pause", node, "set_process")
-		assert(node.has_method("on_reset"))
-		connect("reset", node, "on_reset")
+
+	for node in get_tree().get_nodes_in_group("can_restart"):
+		assert(node.has_method("restart"))
+		connect("reset", node, "restart")
 
 
 func _unhandled_input(event: InputEvent):
