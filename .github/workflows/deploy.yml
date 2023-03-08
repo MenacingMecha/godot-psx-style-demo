@@ -1,0 +1,111 @@
+name: Deploy
+
+on: 
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  export-builds:
+    runs-on: ubuntu-latest
+    name: Export Builds
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2.3.1
+      with:
+        fetch-depth: 0
+    - name: export game
+      uses: firebelley/godot-export@v3.0.0
+      with:
+        godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/3.5.2/Godot_v3.5.2-stable_linux_headless.64.zip
+        godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/3.5.2/Godot_v3.5.2-stable_export_templates.tpz
+        relative_project_path: ./
+        create_release: false
+        use_preset_export_path: true
+    - name: upload linux artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: linux
+        path: build/linux/linux/*
+    - name: upload windows artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: windows
+        path: build/windows/windows/*
+    - name: upload html5 artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: html5
+        path: build/html5/html5/*
+  
+  deploy-itch:
+    if: github.repository == 'MenacingMecha/godot-psx-style-demo'
+    needs: [export-builds]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        channel:
+          - linux
+          - windows
+          - html5
+    name: Deploy -> itch.io:${{matrix.channel}}
+    env:
+      ITCH_USERNAME: MenacingMecha
+      ITCH_GAME_ID: godot-psx-style-demo
+    steps:
+      - uses: actions/download-artifact@v3.0.0
+        with:
+          name: ${{matrix.channel}}
+      - uses: KikimoraGames/itch-publish@v0.0.3
+        with:
+          butlerApiKey: ${{secrets.BUTLER_CREDENTIALS}}
+          gameData: ./
+          itchUsername: ${{env.ITCH_USERNAME}}
+          itchGameId: ${{env.ITCH_GAME_ID}}
+          buildChannel: ${{matrix.channel}}
+          buildNumber: ${{github.ref_name}}
+  
+  create-release-page:
+    runs-on: ubuntu-latest
+    name: Create Release Page
+    permissions:
+      contents: write
+    steps:
+      - name: Create release page
+        uses: softprops/action-gh-release@v0.1.14
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
+          draft: true
+          generate_release_notes: true
+  
+  add-release-artifacts:
+    needs: [export-builds, create-release-page]
+    runs-on: ubuntu-latest
+    name: Add Release Artifact -> ${{matrix.channel}}
+    strategy:
+      fail-fast: true
+      matrix:
+        channel:
+          - linux
+          - windows
+          - html5
+    permissions:
+      contents: write
+    env:
+      ARTIFACT_FILENAME: ${{github.event.repository.name}}_${{matrix.channel}}_${{github.ref_name}}.zip
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3.0.0
+        with:
+          name: ${{matrix.channel}}
+      - name: Archive release artifact
+        uses: thedoctor0/zip-release@main
+        with:
+          filename: ${{env.ARTIFACT_FILENAME}}
+      - name: Upload release artifact to release page
+        uses: softprops/action-gh-release@v0.1.14
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
+          fail_on_unmatched_files: true
+          files: ${{env.ARTIFACT_FILENAME}}
