@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://b6irksunrvdek"]
+
+[ext_resource type="Shader" path="res://shaders/post_process_blur.gdshader" id="1_00lvw"]
+
+[resource]
+shader = ExtResource("1_00lvw")
+shader_parameter/blur_scale = Vector2(0.35, 0.35)
+shader_parameter/blur_samples = 20.0
+shader_parameter/blur_brightness = 1.5
+shader_parameter/enabled = false

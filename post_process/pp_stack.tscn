@@ -1,15 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://cs8d3xn2towo"]
+[gd_scene load_steps=7 format=3 uid="uid://cs8d3xn2towo"]
 
-[ext_resource type="Shader" path="res://shaders/lcd_post_process.gdshader" id="1_8n2w8"]
+[ext_resource type="Shader" path="res://shaders/post_process_blur.gdshader" id="1_u8gkl"]
+[ext_resource type="Material" uid="uid://bni0eo5gi5ho4" path="res://post_process/lcd-overlay_mat.tres" id="2_0v7s0"]
 [ext_resource type="Environment" path="res://world/world_env.tres" id="5"]
 [ext_resource type="Script" path="res://post_process/value_label.gd" id="6"]
 [ext_resource type="Script" path="res://post_process/options.gd" id="8"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sq183"]
-shader = ExtResource("1_8n2w8")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q7lan"]
+shader = ExtResource("1_u8gkl")
+shader_parameter/blur_scale = Vector2(0.35, 0.35)
+shader_parameter/blur_samples = 20.0
+shader_parameter/blur_brightness = 1.5
 shader_parameter/enabled = false
-shader_parameter/lcd_opacity = 0.5
-shader_parameter/scanline_gap = 4
 
 [node name="Node" type="Node"]
 
@@ -17,6 +19,7 @@ shader_parameter/scanline_gap = 4
 layer = 0
 
 [node name="BlurPostProcess" type="SubViewportContainer" parent="PSXLayer"]
+material = SubResource("ShaderMaterial_q7lan")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -30,7 +33,7 @@ size = Vector2i(960, 720)
 render_target_update_mode = 4
 
 [node name="LCDOverlay" type="SubViewportContainer" parent="PSXLayer/BlurPostProcess/Viewport"]
-material = SubResource("ShaderMaterial_sq183")
+material = ExtResource("2_0v7s0")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
