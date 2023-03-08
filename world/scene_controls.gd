@@ -19,7 +19,6 @@ func _ready():
 
 
 func _unhandled_input(event: InputEvent):
-	# TODO: change to `is_action_released()` when all relevant objects use this
 	if event.is_action_pressed(PAUSE_ACTION):
 		self._is_paused = !self._is_paused
 
