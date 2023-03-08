@@ -1,6 +1,6 @@
 name: Deploy
 
-on: 
+on:
   push:
     tags:
       - 'v*'
@@ -26,18 +26,18 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: linux
-        path: build/linux/linux/*
+        path: build/x11/*
     - name: upload windows artifact
       uses: actions/upload-artifact@v3
       with:
         name: windows
-        path: build/windows/windows/*
+        path: build/win/*
     - name: upload html5 artifact
       uses: actions/upload-artifact@v3
       with:
         name: html5
-        path: build/html5/html5/*
-  
+        path: build/html5/*
+
   deploy-itch:
     if: github.repository == 'MenacingMecha/godot-psx-style-demo'
     needs: [export-builds]
@@ -65,7 +65,7 @@ jobs:
           itchGameId: ${{env.ITCH_GAME_ID}}
           buildChannel: ${{matrix.channel}}
           buildNumber: ${{github.ref_name}}
-  
+
   create-release-page:
     runs-on: ubuntu-latest
     name: Create Release Page
@@ -78,7 +78,7 @@ jobs:
           token: ${{secrets.GITHUB_TOKEN}}
           draft: true
           generate_release_notes: true
-  
+
   add-release-artifacts:
     needs: [export-builds, create-release-page]
     runs-on: ubuntu-latest
