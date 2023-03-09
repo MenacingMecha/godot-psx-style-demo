@@ -1,5 +1,7 @@
 # Godot PSX Style Demo
 
+**WARNING: Breaking changes in 4.0 has currently left the project in a broken state as I work through fixing these issues. Please refer to the v1.x branch for working Godot 3 version.**
+
 [Play demo in browser!](https://menacingmecha.itch.io/godot-psx-style-demo)
 
 ![Example Screenshot](./readme-assets/screenshot.png)
