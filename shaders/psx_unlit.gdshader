@@ -2,8 +2,8 @@ shader_type spatial;
 render_mode unshaded, cull_disabled, shadows_disabled, depth_draw_opaque;
 
 uniform float precision_multiplier : hint_range(0.0, 1.0) = 1.0;
-uniform vec4 modulate_color : hint_color = vec4(1.0);
-uniform sampler2D albedoTex : hint_albedo;
+uniform vec4 modulate_color : source_color = vec4(1.0);
+uniform sampler2D albedoTex : source_color, filter_nearest, repeat_enable;
 uniform vec2 uv_scale = vec2(1.0, 1.0);
 uniform vec2 uv_offset = vec2(.0, .0);
 uniform vec2 uv_pan_velocity = vec2(0.0);
