@@ -1,11 +1,11 @@
-extends Spatial
+extends Node3D
 
 const SpatialSinPan := preload("res://world/spatial_sin_pan.gd")
 
 const SCALE_DISTANCE := 0.125
 const DEFAULT_SCALE := Vector3.ONE * 0.775
 
-export var _reverse_direction := false
+@export var _reverse_direction := false
 
 var _time := 0.0
 
