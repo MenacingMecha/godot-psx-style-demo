@@ -1,6 +1,5 @@
 shader_type spatial;
-//render_mode unshaded, shadows_disabled, blend_add, depth_draw_alpha_prepass, cull_disabled;
-render_mode vertex_lighting, shadows_disabled, blend_add, depth_draw_alpha_prepass, cull_disabled;
+render_mode vertex_lighting, shadows_disabled, blend_add, cull_disabled;
 
 uniform float precision_multiplier : hint_range(0.0, 1.0) = 1.0;
 
