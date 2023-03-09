@@ -1,10 +1,10 @@
-extends Spatial
+extends Node3D
 
 const ROTATION_SPEED := 1.0
 
 var _time = 0.0
 
-onready var _default_y_rotation: float = rotation.y
+@onready var _default_y_rotation: float = rotation.y
 
 
 func _process(p_delta: float):
