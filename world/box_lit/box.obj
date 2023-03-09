@@ -1,6 +1,5 @@
 # Blender v2.83.2 OBJ File: 'box.blend'
 # www.blender.org
-mtllib box.mtl
 o Cube_Cube.004
 v 1.000000 -1.000000 -1.000000
 v 1.000000 1.000000 -1.000000

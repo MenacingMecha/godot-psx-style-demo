@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://cs8d3xn2towo"]
+[gd_scene load_steps=10 format=3 uid="uid://cs8d3xn2towo"]
 
 [ext_resource type="Material" uid="uid://b6irksunrvdek" path="res://post_process/blur-post-process_mat.tres" id="1_3emcg"]
 [ext_resource type="Material" uid="uid://bni0eo5gi5ho4" path="res://post_process/lcd-overlay_mat.tres" id="2_0v7s0"]
 [ext_resource type="Shader" path="res://shaders/pp_band-dither.gdshader" id="3_rkbcs"]
 [ext_resource type="Texture2D" uid="uid://b0ub3tqjyw46f" path="res://shaders/psxdither.png" id="4_05ih0"]
-[ext_resource type="Environment" path="res://world/world_env.tres" id="5"]
+[ext_resource type="Environment" uid="uid://55j275wwndlp" path="res://world/world_env.tres" id="5"]
+[ext_resource type="PackedScene" uid="uid://c1xno4bm2dlyj" path="res://world/world.tscn" id="5_i4o5h"]
 [ext_resource type="Script" path="res://post_process/value_label.gd" id="6"]
 [ext_resource type="Script" path="res://post_process/options.gd" id="8"]
 
@@ -28,6 +29,7 @@ mouse_filter = 2
 
 [node name="Viewport" type="SubViewport" parent="PSXLayer/BlurPostProcess"]
 handle_input_locally = false
+canvas_item_default_texture_filter = 0
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
 size = Vector2i(960, 720)
@@ -43,6 +45,7 @@ stretch = true
 
 [node name="Viewport" type="SubViewport" parent="PSXLayer/BlurPostProcess/Viewport/LCDOverlay"]
 handle_input_locally = false
+canvas_item_default_texture_filter = 0
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
 size = Vector2i(960, 720)
@@ -59,10 +62,13 @@ stretch_shrink = 3
 
 [node name="Viewport" type="SubViewport" parent="PSXLayer/BlurPostProcess/Viewport/LCDOverlay/Viewport/DitherBanding"]
 handle_input_locally = false
+canvas_item_default_texture_filter = 0
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
 size = Vector2i(320, 240)
 render_target_update_mode = 4
+
+[node name="World" parent="PSXLayer/BlurPostProcess/Viewport/LCDOverlay/Viewport/DitherBanding/Viewport" instance=ExtResource("5_i4o5h")]
 
 [node name="GUILayer@VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = -1
@@ -83,9 +89,6 @@ self_modulate = Color(1, 1, 1, 0.392157)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("8")
-post_process_lcd = null
-post_process_blur = null
-post_process_dither_band = null
 environment = ExtResource("5")
 
 [node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer" type="VBoxContainer" parent="."]

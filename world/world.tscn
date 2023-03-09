@@ -1,120 +1,113 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=18 format=3 uid="uid://c1xno4bm2dlyj"]
 
-[ext_resource path="res://world/orbit_camera.gd" type="Script" id=1]
-[ext_resource path="res://world/light-shaft_mat.tres" type="Material" id=2]
-[ext_resource path="res://world/spatial_sin_pan.gd" type="Script" id=3]
-[ext_resource path="res://world/floor.tres" type="Material" id=4]
-[ext_resource path="res://world/object_mat.tres" type="Material" id=5]
-[ext_resource path="res://world/shadow/shadow.tscn" type="PackedScene" id=6]
-[ext_resource path="res://world/sparkle_mat.tres" type="Material" id=7]
-[ext_resource path="res://world/box.obj" type="ArrayMesh" id=8]
-[ext_resource path="res://world/object_metal_mat.tres" type="Material" id=9]
-[ext_resource path="res://world/light-shaft.obj" type="ArrayMesh" id=10]
-[ext_resource path="res://world/crystal/crystal_mesh.tscn" type="PackedScene" id=11]
-[ext_resource path="res://world/bevel-box.obj" type="ArrayMesh" id=12]
-[ext_resource path="res://world/scene_controls.gd" type="Script" id=14]
-[ext_resource path="res://world/world_env.tres" type="Environment" id=15]
+[ext_resource type="Script" path="res://world/orbit_camera.gd" id="1"]
+[ext_resource type="Material" uid="uid://cg1031m8scq7b" path="res://world/light-shaft/light-shaft_mat.tres" id="2"]
+[ext_resource type="Script" path="res://world/spatial_sin_pan.gd" id="3"]
+[ext_resource type="Material" path="res://world/floor/floor.tres" id="4"]
+[ext_resource type="ArrayMesh" uid="uid://dcm073t81n4p0" path="res://world/light-shaft/light-shaft_mesh.res" id="5_4haum"]
+[ext_resource type="PackedScene" path="res://world/shadow/shadow.tscn" id="6"]
+[ext_resource type="ArrayMesh" uid="uid://cd1odanjyg1jw" path="res://world/box_lit/box.obj" id="8"]
+[ext_resource type="Material" path="res://world/box_metal/box-metal_mat.tres" id="8_yroyl"]
+[ext_resource type="Material" uid="uid://6l26m1a5na2u" path="res://world/sparkle/sparkle_particle-process_mat.tres" id="10_rc0nk"]
+[ext_resource type="PackedScene" uid="uid://k0jtpj0fkkrv" path="res://world/crystal/crystal_mesh.tscn" id="11"]
+[ext_resource type="Material" path="res://world/sparkle/sparkle_mat.tres" id="11_rf0vm"]
+[ext_resource type="ArrayMesh" uid="uid://cbvn8fwufde7c" path="res://world/box_metal/bevel-box.obj" id="12"]
+[ext_resource type="Material" uid="uid://duageqxj0x4k1" path="res://world/box_lit/box-lit_mat.tres" id="12_e4oia"]
+[ext_resource type="Script" path="res://world/scene_controls.gd" id="14"]
+[ext_resource type="Environment" uid="uid://55j275wwndlp" path="res://world/world_env.tres" id="15"]
 
-[sub_resource type="CubeMesh" id=5]
-material = ExtResource( 4 )
+[sub_resource type="BoxMesh" id="5"]
+material = ExtResource("4")
 flip_faces = true
-size = Vector3( 40, 40, 40 )
+size = Vector3(40, 40, 40)
 subdivide_width = 25
 subdivide_height = 25
 subdivide_depth = 25
 
-[sub_resource type="ParticlesMaterial" id=1]
-direction = Vector3( 1, 1, 1 )
-spread = 180.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 3.0
-initial_velocity_random = 0.3
-damping = 1.0
+[sub_resource type="QuadMesh" id="2"]
+material = ExtResource("11_rf0vm")
+size = Vector2(0.3, 0.3)
 
-[sub_resource type="QuadMesh" id=2]
-material = ExtResource( 7 )
-size = Vector2( 0.3, 0.3 )
-
-[node name="World" type="Spatial"]
+[node name="World" type="Node3D"]
 
 [node name="SceneControls" type="Node" parent="."]
-script = ExtResource( 14 )
+script = ExtResource("14")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource( 15 )
+environment = ExtResource("15")
 
-[node name="OrbitPoint" type="Spatial" parent="." groups=["can_pause", "can_restart"]]
-transform = Transform( 0.831023, 0, -0.556238, 0, 1, 0, 0.556238, 0, 0.831023, 0, -2.38419e-07, -4.76837e-07 )
-script = ExtResource( 1 )
+[node name="OrbitPoint" type="Node3D" parent="." groups=["can_pause", "can_restart"]]
+transform = Transform3D(0.831023, 0, -0.556238, 0, 1, 0, 0.556238, 0, 0.831023, 0, -2.38419e-07, -4.76837e-07)
+script = ExtResource("1")
 
-[node name="Camera" type="Camera" parent="OrbitPoint"]
-transform = Transform( 1, 0, 0, 0, 0.989078, 0.147395, 0, -0.147395, 0.989078, 0, 2.147, 4.48151 )
+[node name="Camera" type="Camera3D" parent="OrbitPoint"]
+transform = Transform3D(1, 0, 0, 0, 0.989078, 0.147395, 0, -0.147395, 0.989078, 0, 2.147, 4.48151)
 fov = 68.1243
 
-[node name="DirectionalLight" type="DirectionalLight" parent="OrbitPoint"]
-transform = Transform( 0.999229, -0.0247207, 0.0305003, 0, 0.776871, 0.629659, -0.0392604, -0.629174, 0.776272, 5.08833, 2.79045, -0.311581 )
+[node name="DirectionalLight" type="DirectionalLight3D" parent="OrbitPoint"]
+transform = Transform3D(0.999229, -0.0247207, 0.0305003, 0, 0.776871, 0.629659, -0.0392604, -0.629174, 0.776272, 5.08833, 2.79045, -0.311581)
 light_energy = 1.5
 
-[node name="Background" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0 )
-mesh = SubResource( 5 )
+[node name="Background" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0)
+mesh = SubResource("5")
 
-[node name="LightShaft" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0109267, 2.05731, 0.0147681 )
-mesh = ExtResource( 10 )
+[node name="LightShaft" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0109267, 2.05731, 0.0147681)
+mesh = ExtResource("5_4haum")
 skeleton = NodePath("")
-material/0 = ExtResource( 2 )
+surface_material_override/0 = ExtResource("2")
 
-[node name="BoxMetal" type="MeshInstance" parent="." groups=["can_pause", "can_restart"]]
-transform = Transform( 0.613118, 0, 0, 0, 0.613118, 0, 0, 0, 0.613118, -1, 2.236, 0 )
-mesh = ExtResource( 12 )
-material/0 = ExtResource( 9 )
-script = ExtResource( 3 )
+[node name="BoxMetal" type="MeshInstance3D" parent="." groups=["can_pause", "can_restart"]]
+transform = Transform3D(0.613118, 0, 0, 0, 0.613118, 0, 0, 0, 0.613118, -1, 2.236, 0)
+mesh = ExtResource("12")
+surface_material_override/0 = ExtResource("8_yroyl")
+script = ExtResource("3")
 
-[node name="Particles" type="Particles" parent="BoxMetal" groups=["can_restart"]]
-transform = Transform( 0.999973, 0.00729208, -0.00112456, -0.00729237, 0.999973, -0.000250523, 0.00112271, 0.000258713, 0.999999, 0, 0, 0 )
-process_material = SubResource( 1 )
-draw_pass_1 = SubResource( 2 )
+[node name="Particles" type="GPUParticles3D" parent="BoxMetal" groups=["can_restart"]]
+transform = Transform3D(0.999973, 0.00729208, -0.00112456, -0.00729237, 0.999973, -0.000250523, 0.00112271, 0.000258713, 0.999999, 0, 0, 0)
+process_material = ExtResource("10_rc0nk")
+draw_pass_1 = SubResource("2")
 
-[node name="BoxMetalShadow" parent="." instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0 )
+[node name="BoxMetalShadow" parent="." instance=ExtResource("6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
 
-[node name="BoxLit" type="MeshInstance" parent="." groups=["can_pause", "can_restart"]]
-transform = Transform( 0.613118, 0, 0, 0, 0.613118, 0, 0, 0, 0.613118, 1, 2.236, 0 )
-mesh = ExtResource( 8 )
-material/0 = ExtResource( 5 )
-script = ExtResource( 3 )
+[node name="BoxLit" type="MeshInstance3D" parent="." groups=["can_pause", "can_restart"]]
+transform = Transform3D(0.613118, 0, 0, 0, 0.613118, 0, 0, 0, 0.613118, 1, 2.236, 0)
+mesh = ExtResource("8")
+surface_material_override/0 = ExtResource("12_e4oia")
+script = ExtResource("3")
 _reverse_direction = true
 
-[node name="BoxLitShadow" parent="." instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+[node name="BoxLitShadow" parent="." instance=ExtResource("6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
 _reverse_direction = true
 
-[node name="OmniLight" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.784, 0 )
-light_color = Color( 0.909804, 0.803922, 0.666667, 1 )
+[node name="OmniLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.784, 0)
+light_color = Color(0.909804, 0.803922, 0.666667, 1)
 light_energy = 4.75
 omni_range = 3.0
 omni_attenuation = 0.0915055
 
-[node name="OmniLight2" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.784, 0 )
-light_color = Color( 0.909804, 0.803922, 0.666667, 1 )
+[node name="OmniLight2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.784, 0)
+light_color = Color(0.909804, 0.803922, 0.666667, 1)
 light_energy = 4.75
 omni_range = 3.0
 omni_attenuation = 0.0915055
 
-[node name="crystal" parent="." instance=ExtResource( 11 )]
-transform = Transform( 0.719146, 0, 0.694859, 0, 1, 0, -0.694859, 0, 0.719146, 1.93081, 0, 1.34372 )
+[node name="crystal" parent="." instance=ExtResource("11")]
+transform = Transform3D(0.719146, 0, 0.694859, 0, 1, 0, -0.694859, 0, 0.719146, 1.93081, 0, 1.34372)
 
-[node name="crystal2" parent="." instance=ExtResource( 11 )]
-transform = Transform( 0.826285, 0, -0.563252, 0, 1, 0, 0.563252, 0, 0.826285, -1.32247, 0, 1.77809 )
+[node name="crystal2" parent="." instance=ExtResource("11")]
+transform = Transform3D(0.826285, 0, -0.563252, 0, 1, 0, 0.563252, 0, 0.826285, -1.32247, 0, 1.77809)
 
-[node name="crystal3" parent="." instance=ExtResource( 11 )]
-transform = Transform( 0.864371, 0, 0.502854, 0, 1, 0, -0.502854, 0, 0.864371, -2.32825, 0, -0.999177 )
+[node name="crystal3" parent="." instance=ExtResource("11")]
+transform = Transform3D(0.864371, 0, 0.502854, 0, 1, 0, -0.502854, 0, 0.864371, -2.32825, 0, -0.999177)
 
-[node name="crystal4" parent="." instance=ExtResource( 11 )]
-transform = Transform( -0.632935, 0, 0.774205, 0, 1, 0, -0.774205, 0, -0.632935, 2.30476, 0, -1.16371 )
+[node name="crystal4" parent="." instance=ExtResource("11")]
+transform = Transform3D(-0.632935, 0, 0.774205, 0, 1, 0, -0.774205, 0, -0.632935, 2.30476, 0, -1.16371)
 
-[node name="crystal5" parent="." instance=ExtResource( 11 )]
-transform = Transform( -0.90227, 0, -0.431172, 0, 1, 0, 0.431172, 0, -0.90227, -0.00271803, 0, -1.98459 )
+[node name="crystal5" parent="." instance=ExtResource("11")]
+transform = Transform3D(-0.90227, 0, -0.431172, 0, 1, 0, 0.431172, 0, -0.90227, -0.00271803, 0, -1.98459)
