@@ -2,10 +2,10 @@ extends Node
 
 const DEFAULT_FOV := 24
 
-export(Material) var post_process_lcd
-export(Material) var post_process_blur
-export(Material) var post_process_dither_band
-export(Environment) var environment
+@export var post_process_lcd : Material
+@export var post_process_blur : Material
+@export var post_process_dither_band : Material
+@export var environment : Material
 
 
 func _ready():
@@ -13,7 +13,7 @@ func _ready():
 
 
 func set_fov(value: int):
-	Engine.set_target_fps(value)
+	Engine.max_fps = value
 
 
 func set_post_process(enabled: bool):
