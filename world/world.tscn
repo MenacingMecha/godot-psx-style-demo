@@ -10,7 +10,7 @@
 [ext_resource type="Material" path="res://world/box_metal/box-metal_mat.tres" id="8_yroyl"]
 [ext_resource type="Material" uid="uid://6l26m1a5na2u" path="res://world/sparkle/sparkle_particle-process_mat.tres" id="10_rc0nk"]
 [ext_resource type="PackedScene" uid="uid://k0jtpj0fkkrv" path="res://world/crystal/crystal_mesh.tscn" id="11"]
-[ext_resource type="Material" path="res://world/sparkle/sparkle_mat.tres" id="11_rf0vm"]
+[ext_resource type="Material" uid="uid://0828pxpypo6k" path="res://world/sparkle/sparkle_mat.tres" id="11_rf0vm"]
 [ext_resource type="ArrayMesh" uid="uid://cbvn8fwufde7c" path="res://world/box_metal/bevel-box.obj" id="12"]
 [ext_resource type="Material" uid="uid://duageqxj0x4k1" path="res://world/box_lit/box-lit_mat.tres" id="12_e4oia"]
 [ext_resource type="Script" path="res://world/scene_controls.gd" id="14"]
@@ -65,7 +65,8 @@ surface_material_override/0 = ExtResource("8_yroyl")
 script = ExtResource("3")
 
 [node name="Particles" type="GPUParticles3D" parent="BoxMetal" groups=["can_restart"]]
-transform = Transform3D(0.999973, 0.00729208, -0.00112456, -0.00729237, 0.999973, -0.000250523, 0.00112271, 0.000258713, 0.999999, 0, 0, 0)
+fixed_fps = 15
+interpolate = false
 process_material = ExtResource("10_rc0nk")
 draw_pass_1 = SubResource("2")
 
