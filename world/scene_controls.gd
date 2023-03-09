@@ -6,16 +6,21 @@ signal reset
 const PAUSE_ACTION := "ui_accept"
 const RESET_ACTION := "reset_camera_position"
 
-var _is_paused := false setget _set_is_paused
+var _is_paused := false :
+	set (value):
+		_is_paused = value
+		emit_signal("pause", !value)
+
+@onready var _viewport := get_viewport()
 
 
 func _ready():
 	for node in get_tree().get_nodes_in_group("can_pause"):
-		connect("pause", node, "set_process")
+		pause.connect(node.set_process.bind())
 
 	for node in get_tree().get_nodes_in_group("can_restart"):
 		assert(node.has_method("restart"))
-		connect("reset", node, "restart")
+		reset.connect(node.restart.bind())
 
 
 func _unhandled_input(event: InputEvent):
@@ -25,9 +30,5 @@ func _unhandled_input(event: InputEvent):
 	elif event.is_action_pressed(RESET_ACTION):
 		emit_signal("reset")
 
-	get_tree().set_input_as_handled()
+	self._viewport.set_input_as_handled()
 
-
-func _set_is_paused(p_paused: bool):
-	_is_paused = p_paused
-	emit_signal("pause", !p_paused)
