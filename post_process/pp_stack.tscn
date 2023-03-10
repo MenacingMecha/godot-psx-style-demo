@@ -70,202 +70,251 @@ render_target_update_mode = 4
 
 [node name="World" parent="PSXLayer/BlurPostProcess/Viewport/LCDOverlay/Viewport/DitherBanding/Viewport" instance=ExtResource("5_i4o5h")]
 
-[node name="GUILayer@VBoxContainer" type="VBoxContainer" parent="."]
-anchors_preset = -1
-anchor_left = 0.01
-anchor_top = 0.01
-anchor_right = 0.05
-anchor_bottom = 0.98
+[node name="GUILayer" type="CanvasLayer" parent="."]
 
-[node name="GUILayer@VBoxContainer@ToggleOptions" type="Button" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="GUILayer"]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 124.0
+grow_vertical = 2
+
+[node name="ToggleOptions" type="Button" parent="GUILayer/VBoxContainer"]
 self_modulate = Color(1, 1, 1, 0.392157)
+layout_mode = 2
 focus_mode = 0
 toggle_mode = true
 text = "Toggle Options"
 
-[node name="GUILayer@VBoxContainer@OptionsPanel" type="Panel" parent="."]
+[node name="OptionsPanel" type="Panel" parent="GUILayer/VBoxContainer"]
 visible = false
 self_modulate = Color(1, 1, 1, 0.392157)
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("8")
 environment = ExtResource("5")
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer" type="VBoxContainer" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="VBoxContainer" type="VBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel"]
+layout_mode = 2
+offset_right = 124.0
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FPS" type="HBoxContainer" parent="."]
+[node name="FPS" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
+layout_mode = 2
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FPS@Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FPS"]
+layout_mode = 2
 text = "FPS"
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FPS@HSlider" type="HSlider" parent="."]
+[node name="HSlider" type="HSlider" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FPS"]
+layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 min_value = 10.0
 max_value = 60.0
 value = 24.0
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FPS@Value" type="Label" parent="."]
+[node name="Value" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FPS"]
+layout_mode = 2
 text = "24"
 script = ExtResource("6")
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@HSeparator2" type="HSeparator" parent="."]
+[node name="HSeparator2" type="HSeparator" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
+layout_mode = 2
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@ColorDepth" type="HBoxContainer" parent="."]
+[node name="ColorDepth" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
+layout_mode = 2
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@ColorDepth@Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/ColorDepth"]
+layout_mode = 2
 text = "Col. Depth"
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@ColorDepth@HSlider" type="HSlider" parent="."]
+[node name="HSlider" type="HSlider" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/ColorDepth"]
+layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 min_value = 1.0
 max_value = 32.0
 value = 15.0
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@ColorDepth@Value" type="Label" parent="."]
+[node name="Value" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/ColorDepth"]
+layout_mode = 2
 text = "15"
 script = ExtResource("6")
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@DitherBanding" type="HBoxContainer" parent="."]
+[node name="DitherBanding" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
+layout_mode = 2
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@DitherBanding@Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/DitherBanding"]
+layout_mode = 2
 text = "Dither Banding"
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@DitherBanding@CheckBox" type="CheckBox" parent="."]
+[node name="CheckBox" type="CheckBox" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/DitherBanding"]
+layout_mode = 2
 size_flags_horizontal = 10
 focus_mode = 0
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@HSeparator4" type="HSeparator" parent="."]
+[node name="HSeparator4" type="HSeparator" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
+layout_mode = 2
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDOverlay" type="HBoxContainer" parent="."]
+[node name="LCDOverlay" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
+layout_mode = 2
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDOverlay@Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDOverlay"]
+layout_mode = 2
 text = "LCD Overlay"
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDOverlay@CheckBox" type="CheckBox" parent="."]
+[node name="CheckBox" type="CheckBox" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDOverlay"]
+layout_mode = 2
 size_flags_horizontal = 10
 focus_mode = 0
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDOpacity" type="HBoxContainer" parent="."]
+[node name="LCDOpacity" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
 visible = false
+layout_mode = 2
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDOpacity@Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDOpacity"]
+layout_mode = 2
 text = "Opacity"
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDOpacity@HSlider" type="HSlider" parent="."]
+[node name="HSlider" type="HSlider" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDOpacity"]
+layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 max_value = 1.0
 step = 0.01
 value = 0.5
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDOpacity@Value" type="Label" parent="."]
+[node name="Value" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDOpacity"]
+layout_mode = 2
 text = "0.5"
 script = ExtResource("6")
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDScanlineGap" type="HBoxContainer" parent="."]
+[node name="LCDScanlineGap" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
 visible = false
+layout_mode = 2
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDScanlineGap@Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDScanlineGap"]
+layout_mode = 2
 text = "Scan. Gap"
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDScanlineGap@HSlider" type="HSlider" parent="."]
+[node name="HSlider" type="HSlider" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDScanlineGap"]
+layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 max_value = 16.0
 value = 4.0
 rounded = true
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@LCDScanlineGap@Value" type="Label" parent="."]
+[node name="Value" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/LCDScanlineGap"]
+layout_mode = 2
 text = "04"
 script = ExtResource("6")
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@HSeparator" type="HSeparator" parent="."]
+[node name="HSeparator" type="HSeparator" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
+layout_mode = 2
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@Fog" type="HBoxContainer" parent="."]
+[node name="Fog" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
+layout_mode = 2
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@Fog@Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/Fog"]
+layout_mode = 2
 text = "Fog"
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@Fog@CheckBox" type="CheckBox" parent="."]
+[node name="CheckBox" type="CheckBox" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/Fog"]
+layout_mode = 2
 size_flags_horizontal = 10
 focus_mode = 0
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogColor" type="HBoxContainer" parent="."]
+[node name="FogColor" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
+layout_mode = 2
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogColor@Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogColor"]
+layout_mode = 2
 size_flags_horizontal = 5
 text = "Fog Color"
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogColor@ColorPickerButton" type="ColorPickerButton" parent="."]
+[node name="ColorPickerButton" type="ColorPickerButton" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogColor"]
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.8
 focus_mode = 0
 color = Color(0.666667, 0.764706, 1, 0.960784)
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogBegin" type="HBoxContainer" parent="."]
+[node name="FogBegin" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
+layout_mode = 2
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogBegin@Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogBegin"]
+layout_mode = 2
 text = "Begin"
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogBegin@HSlider" type="HSlider" parent="."]
+[node name="HSlider" type="HSlider" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogBegin"]
+layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 min_value = 1.0
 max_value = 30.0
 value = 6.0
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogBegin@Value" type="Label" parent="."]
+[node name="Value" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogBegin"]
+layout_mode = 2
 text = "06"
 script = ExtResource("6")
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogEnd" type="HBoxContainer" parent="."]
+[node name="FogEnd" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
+layout_mode = 2
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogEnd@Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogEnd"]
+layout_mode = 2
 text = "End   "
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogEnd@HSlider" type="HSlider" parent="."]
+[node name="HSlider" type="HSlider" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogEnd"]
+layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 min_value = 1.0
 max_value = 30.0
 value = 15.0
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@FogEnd@Value" type="Label" parent="."]
+[node name="Value" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/FogEnd"]
+layout_mode = 2
 text = "15"
 script = ExtResource("6")
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@HSeparator3" type="HSeparator" parent="."]
+[node name="HSeparator3" type="HSeparator" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
+layout_mode = 2
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@AmbientLight" type="HBoxContainer" parent="."]
+[node name="AmbientLight" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
+layout_mode = 2
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@AmbientLight@Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/AmbientLight"]
+layout_mode = 2
 size_flags_horizontal = 3
 text = "Ambient Light"
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@AmbientLight@ColorPickerButton" type="ColorPickerButton" parent="."]
+[node name="ColorPickerButton" type="ColorPickerButton" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/AmbientLight"]
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.8
 focus_mode = 0
 color = Color(1, 0.67451, 0.988235, 1)
 edit_alpha = false
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@AmbientEnergy" type="HBoxContainer" parent="."]
+[node name="AmbientEnergy" type="HBoxContainer" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer"]
+layout_mode = 2
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@AmbientEnergy@Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/AmbientEnergy"]
+layout_mode = 2
 text = "Energy"
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@AmbientEnergy@HSlider" type="HSlider" parent="."]
+[node name="HSlider" type="HSlider" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/AmbientEnergy"]
+layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 max_value = 0.5
 step = 0.01
 value = 0.15
 
-[node name="GUILayer@VBoxContainer@OptionsPanel@VBoxContainer@AmbientEnergy@Value" type="Label" parent="."]
+[node name="Value" type="Label" parent="GUILayer/VBoxContainer/OptionsPanel/VBoxContainer/AmbientEnergy"]
+layout_mode = 2
 text = "0.15"
 script = ExtResource("6")
