@@ -16,6 +16,7 @@ config/description="Demo project featuring a collection of PS1 style shaders and
 https://github.com/MenacingMecha/godot-psx-style-demo/"
 run/main_scene="res://post_process/pp_stack.tscn"
 config/features=PackedStringArray("4.0")
+run/max_fps=24
 config/icon="res://readme-assets/screenshot.png"
 
 [display]
@@ -23,6 +24,7 @@ config/icon="res://readme-assets/screenshot.png"
 window/size/viewport_width=960
 window/size/viewport_height=720
 window/size/resizable=false
+window/vsync/vsync_mode=0
 window/stretch/mode="viewport"
 window/size/width=960
 window/size/height=720
