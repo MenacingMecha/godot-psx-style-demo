@@ -1,7 +1,5 @@
 # Godot PSX Style Demo
 
-**WARNING: Breaking changes in 4.0 has currently left the project in a broken state as I work through fixing these issues. Please refer to the v1.x branch for working Godot 3 version.**
-
 [Play demo in browser!](https://menacingmecha.itch.io/godot-psx-style-demo)
 
 ![Example Screenshot](./readme-assets/screenshot.png)
@@ -15,6 +13,10 @@ A collection of shaders and materials for Godot engine that aim to recreate the 
 - Shiny chrome-like metallic surfaces
 - Billboard sprites
 - Fog to limit draw distance
+
+Originally based on: https://github.com/marmitoTH/godot-psx-shaders
+
+Floor texture (available under CC-0): https://stealthix.itch.io/rpg-nature-tileset
 
 ## Demo Controls
 
@@ -38,9 +40,16 @@ A collection of shaders and materials for Godot engine that aim to recreate the 
     - Where possible, prefer to use white ambient light, with vertex colours on geometry to fake lighting
 - Prefer additive blending to transparent blending
 
-Originally based on: https://github.com/marmitoTH/godot-psx-shaders
+## Changes from v1.x
 
-Floor texture (available under CC-0): https://stealthix.itch.io/rpg-nature-tileset
+### Fog
+
+Godot 4.0 changed how environmental fog worked, the key part being the removal of the "start distance" and "end distance" properties.
+While a manual workaround could be implemented, there is work being done to restore this functionality in a later version.
+
+### Runtime options
+
+In order to release working Godot 4 shaders as soon as possible, runtime options for the demo will be re-implemented at a later date.
 
 ## Games using these shaders (in some form)
 - [Isle of Dreamers](https://menacingmecha.itch.io/isle-of-dreamers) - [MenacingMecha](https://menacingmecha.github.io/)
