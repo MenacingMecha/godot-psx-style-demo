@@ -63,7 +63,7 @@ jobs:
           gameData: ./
           itchUsername: ${{env.ITCH_USERNAME}}
           itchGameId: ${{env.ITCH_GAME_ID}}
-          buildChannel: ${{matrix.channel}}
+          buildChannel: v1.x_${{matrix.channel}}
           buildNumber: ${{github.ref_name}}
 
   create-release-page:
