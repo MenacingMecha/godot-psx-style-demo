@@ -15,13 +15,14 @@ jobs:
       with:
         fetch-depth: 0
     - name: export game
-      uses: firebelley/godot-export@v3.0.0
+      uses: firebelley/godot-export@v4.7.0
       with:
-        godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/3.5.2/Godot_v3.5.2-stable_linux_headless.64.zip
-        godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/3.5.2/Godot_v3.5.2-stable_export_templates.tpz
+        godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_linux.x86_64.zip
+        godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_export_templates.tpz
         relative_project_path: ./
         create_release: false
         use_preset_export_path: true
+        use_godot_4: true
     - name: upload linux artifact
       uses: actions/upload-artifact@v3
       with:
