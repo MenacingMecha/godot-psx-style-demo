@@ -7,9 +7,13 @@ render_mode diffuse_lambert, vertex_lighting, cull_disabled, shadows_disabled, d
 uniform float precision_multiplier : hint_range(0.0, 1.0) = 1.0;
 uniform vec4 modulate_color : source_color = vec4(1.0);
 uniform sampler2D albedoTex : source_color, filter_nearest, repeat_enable;
+
+// METAL doesn't use UV, so no need for panning properties
+#ifndef METAL
 uniform vec2 uv_scale = vec2(1.0, 1.0);
 uniform vec2 uv_offset = vec2(.0, .0);
 uniform vec2 uv_pan_velocity = vec2(0.0);
+#endif
 
 // https://github.com/dsoft20/psx_retroshader/blob/master/Assets/Shaders/psx-vertexlit.shader
 const vec2 base_snap_res = vec2(160.0, 120.0);
@@ -26,8 +30,11 @@ vec4 get_snapped_pos(vec4 base_pos)
 
 void vertex()
 {
+// METAL doesn't use UV, so no need to pan UVs
+#ifndef METAL
 	UV = UV * uv_scale + uv_offset;
 	UV += uv_pan_velocity * TIME;
+#endif
 
 	POSITION = get_snapped_pos(PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0));  // snap position to grid
 	POSITION /= abs(POSITION.w);  // discard depth for affine mapping
@@ -37,5 +44,11 @@ void vertex()
 
 void fragment()
 {
-	ALBEDO = (COLOR * texture(albedoTex, UV) * modulate_color).rgb;
+#ifdef METAL
+	vec2 texture_uv = vec2(NORMAL.x / 2.0 + 0.5, (-NORMAL.y) / 2.0 + 0.5);  // Special thanks to Adam McLaughlan
+#else
+	vec2 texture_uv = UV;
+#endif
+
+	ALBEDO = (COLOR * texture(albedoTex, texture_uv) * modulate_color).rgb;
 }
