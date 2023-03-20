@@ -18,6 +18,12 @@ vec4 get_snapped_pos(vec4 base_pos)
 	return snapped_pos;
 }
 
+// Special thanks to Adam McLaughlan
+vec2 project_metal_uv(vec3 normal)
+{
+	return vec2(normal.x / 2.0 + 0.5, (-normal.y) / 2.0 + 0.5);
+}
+
 void vertex()
 {
 	POSITION = get_snapped_pos(PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0));  // snap position to grid
@@ -28,8 +34,5 @@ void vertex()
 
 void fragment()
 {
-	// TODO: metal uv calculation should be a function
-	vec2 metal_uv = vec2(NORMAL.x / 2.0 + 0.5, (-NORMAL.y) / 2.0 + 0.5);  // Special thanks to Adam McLaughlan
-
-	ALBEDO = (COLOR * modulate_color * texture(metal_tex, metal_uv)).rgb;
+	ALBEDO = (COLOR * modulate_color * texture(metal_tex, project_metal_uv(NORMAL))).rgb;
 }
