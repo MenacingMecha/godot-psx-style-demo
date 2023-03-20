@@ -1,12 +1,15 @@
-#if defined(UNLIT)
-render_mode unshaded, cull_disabled, shadows_disabled, depth_draw_opaque;
-#else
+#if defined(LIT)
 render_mode diffuse_lambert, vertex_lighting, cull_disabled, shadows_disabled, depth_draw_opaque;
+#elif defined(UNLIT)
+render_mode unshaded, cull_disabled, shadows_disabled, depth_draw_opaque;
 #endif
 
 uniform float precision_multiplier : hint_range(0.0, 1.0) = 1.0;
 uniform vec4 modulate_color : source_color = vec4(1.0);
+
+#ifndef NO_TEXTURE
 uniform sampler2D albedoTex : source_color, filter_nearest, repeat_enable;
+#endif
 
 // METAL doesn't use UV, so no need for panning properties
 #ifndef METAL
@@ -31,7 +34,7 @@ vec4 get_snapped_pos(vec4 base_pos)
 void vertex()
 {
 // METAL doesn't use UV, so no need to pan UVs
-#ifndef METAL
+#if defined(NO_TEXTURE) || !defined(METAL)
 	UV = UV * uv_scale + uv_offset;
 	UV += uv_pan_velocity * TIME;
 #endif
@@ -46,9 +49,19 @@ void fragment()
 {
 #ifdef METAL
 	vec2 texture_uv = vec2(NORMAL.x / 2.0 + 0.5, (-NORMAL.y) / 2.0 + 0.5);  // Special thanks to Adam McLaughlan
-#else
+#elif !defined(NO_TEXTURE)
 	vec2 texture_uv = UV;
 #endif
 
-	ALBEDO = (COLOR * texture(albedoTex, texture_uv) * modulate_color).rgb;
+	vec4 color_base = COLOR * modulate_color;
+
+#ifdef NO_TEXTURE
+	ALBEDO = color_base.rgb;
+#else
+	ALBEDO = (color_base * texture(albedoTex, texture_uv)).rgb;
+#endif
+
+#ifdef LIGHT_VOLUME
+	ALPHA = 1.0 - UV.y;
+#endif
 }
