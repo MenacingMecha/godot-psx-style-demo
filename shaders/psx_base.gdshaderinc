@@ -1,6 +1,6 @@
 #if defined(UNLIT)
 render_mode unshaded, cull_disabled, shadows_disabled, depth_draw_opaque;
-#elif
+#else
 render_mode diffuse_lambert, vertex_lighting, cull_disabled, shadows_disabled, depth_draw_opaque;
 #endif
 
