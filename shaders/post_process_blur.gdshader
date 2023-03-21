@@ -1,3 +1,4 @@
+#pragma disable_preprocessor
 shader_type canvas_item;
 
 uniform vec2 blur_scale = vec2(0.5, 0.5);
@@ -23,7 +24,7 @@ vec4 gaussian_blur_pass(vec2 texture_pixel_size, sampler2D texture, vec2 uv, flo
     float total_weight = 0.0;
     vec2 scale_horiz = texture_pixel_size * vec2(blur_scale.x, 0.0);
     vec4 color_horiz = vec4(0.0);
-    
+
     for(int i=-int(_blur_samples)/2; i < int(_blur_samples)/2; ++i) {
         weight = gaussian(float(i));
         color_horiz += texture(texture, uv + scale_horiz * vec2(float(i))) * weight;

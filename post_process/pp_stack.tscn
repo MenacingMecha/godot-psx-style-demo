@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c1xno4bm2dlyj" path="res://world/world.tscn" id="5_i4o5h"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m5nvn"]
+render_priority = 0
 shader = ExtResource("3_rkbcs")
 shader_parameter/col_depth = 15.0
 shader_parameter/dither_banding = true

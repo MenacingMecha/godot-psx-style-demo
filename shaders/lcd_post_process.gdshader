@@ -1,3 +1,4 @@
+#pragma disable_preprocessor
 shader_type canvas_item;
 
 uniform bool enabled = true;
@@ -20,7 +21,7 @@ vec4 lcdColor(int pos_x, int pos_y)
     lcdColor.r = lcdColor.r * when_eq(pos_x, 0);
     lcdColor.g = lcdColor.g * when_eq(pos_x, 1);
     lcdColor.b = lcdColor.b * when_eq(pos_x, 2);
-    
+
     // Darken every 3rd horizontal strip for scanline
     // if (int(mod(FRAGCOORD.y,3.0)) == 0) lcdColor.rgb = vec3(0);
     lcdColor.rgb = lcdColor.rgb * vec3(1.0 - when_eq(pos_y, 0));

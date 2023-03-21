@@ -1,3 +1,4 @@
+#pragma disable_preprocessor
 shader_type canvas_item;
 // originally based on https://github.com/WittyCognomen/godot-psx-shaders-demo/blob/master/shaders/psx_dither_post.shader
 
