@@ -8,7 +8,7 @@ uniform sampler2D albedoTex : source_color, filter_nearest, repeat_enable;
 #endif
 
 // METAL doesn't use UV, so no need for panning properties
-#ifndef METAL
+#if !defined(NO_TEXTURE) && !defined(METAL)
 uniform vec2 uv_scale = vec2(1.0, 1.0);
 uniform vec2 uv_offset = vec2(.0, .0);
 uniform vec2 uv_pan_velocity = vec2(0.0);
@@ -36,7 +36,7 @@ vec4 get_snapped_pos(vec4 base_pos)
 void vertex()
 {
 // METAL doesn't use UV, so no need to pan UVs
-#if defined(NO_TEXTURE) || !defined(METAL)
+#if !defined(NO_TEXTURE) && !defined(METAL)
 	UV = UV * uv_scale + uv_offset;
 	UV += uv_pan_velocity * TIME;
 #endif

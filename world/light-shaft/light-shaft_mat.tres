@@ -6,3 +6,4 @@
 render_priority = 0
 shader = ExtResource("1_5xlul")
 shader_parameter/precision_multiplier = 1.0
+shader_parameter/modulate_color = Color(1, 1, 1, 1)
