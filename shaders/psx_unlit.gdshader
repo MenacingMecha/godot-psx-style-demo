@@ -1,5 +1,7 @@
 shader_type spatial;
 
-#define UNLIT
+#define LIT unshaded
+#define DEPTH depth_draw_opaque
+#define BLEND blend_mix
 
 #include "psx_base.gdshaderinc"

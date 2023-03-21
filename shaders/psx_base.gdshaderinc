@@ -1,8 +1,4 @@
-#if defined(LIT)
-render_mode diffuse_lambert, vertex_lighting, cull_disabled, shadows_disabled, depth_draw_opaque;
-#elif defined(UNLIT)
-render_mode unshaded, cull_disabled, shadows_disabled, depth_draw_opaque;
-#endif
+render_mode LIT, cull_disabled, shadows_disabled, DEPTH, BLEND;
 
 uniform float precision_multiplier : hint_range(0.0, 1.0) = 1.0;
 uniform vec4 modulate_color : source_color = vec4(1.0);

@@ -1,6 +1,8 @@
 shader_type spatial;
-render_mode vertex_lighting, shadows_disabled, blend_add, cull_disabled;
 
+#define LIT diffuse_lambert, vertex_lighting
+#define DEPTH depth_draw_opaque
+#define BLEND blend_add
 #define NO_TEXTURE
 #define LIGHT_VOLUME
 
