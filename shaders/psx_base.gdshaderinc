@@ -14,6 +14,12 @@ uniform vec2 uv_offset = vec2(.0, .0);
 uniform vec2 uv_pan_velocity = vec2(0.0);
 #endif
 
+#ifdef ALPHA_SCISSOR
+uniform bool billboard = false;
+uniform bool y_billboard = false;
+uniform float alpha_scissor : hint_range(0, 1) = 0.1;
+#endif
+
 // https://github.com/dsoft20/psx_retroshader/blob/master/Assets/Shaders/psx-vertexlit.shader
 const vec2 base_snap_res = vec2(160.0, 120.0);
 vec4 get_snapped_pos(vec4 base_pos)
@@ -35,8 +41,28 @@ void vertex()
 	UV += uv_pan_velocity * TIME;
 #endif
 
+#ifdef ALPHA_SCISSOR
+	if (y_billboard)
+	{
+		MODELVIEW_MATRIX = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0], MODEL_MATRIX[1], vec4(normalize(cross(INV_VIEW_MATRIX[0].xyz, MODEL_MATRIX[1].xyz)), 0.0), MODEL_MATRIX[3]);
+		MODELVIEW_MATRIX = MODELVIEW_MATRIX * mat4(vec4(1.0, 0.0, 0.0, 0.0), vec4(0.0, 1.0 / length(MODEL_MATRIX[1].xyz), 0.0, 0.0), vec4(0.0, 0.0, 1.0, 0.0), vec4(0.0, 0.0, 0.0, 1.0));
+	}
+	else if (billboard)
+	{
+		MODELVIEW_MATRIX = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0], INV_VIEW_MATRIX[1], INV_VIEW_MATRIX[2], MODEL_MATRIX[3]);
+	}
+#endif
+
 	POSITION = get_snapped_pos(PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0));  // snap position to grid
 	POSITION /= abs(POSITION.w);  // discard depth for affine mapping
+
+#ifdef ALPHA_SCISSOR
+	if (y_billboard)
+	{
+		MODELVIEW_MATRIX = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0], INV_VIEW_MATRIX[1], INV_VIEW_MATRIX[2], MODEL_MATRIX[3]);
+		MODELVIEW_MATRIX = MODELVIEW_MATRIX * mat4(vec4(length(MODEL_MATRIX[0].xyz), 0.0, 0.0, 0.0), vec4(0.0, length(MODEL_MATRIX[1].xyz), 0.0, 0.0), vec4(0.0, 0.0, length(MODEL_MATRIX[2].xyz), 0.0), vec4(0.0, 0.0, 0.0, 1.0));
+	}
+#endif
 
 	VERTEX = VERTEX;  // it breaks without this - not sure why
 }
@@ -54,10 +80,14 @@ void fragment()
 #ifdef NO_TEXTURE
 	ALBEDO = color_base.rgb;
 #else
-	ALBEDO = (color_base * texture(albedoTex, texture_uv)).rgb;
+	vec4 texture_color = texture(albedoTex, texture_uv);
+	ALBEDO = (color_base * texture_color).rgb;
 #endif
 
 #ifdef LIGHT_VOLUME
 	ALPHA = 1.0 - UV.y;
+#elif defined(ALPHA_SCISSOR)
+	ALPHA = texture_color.a * color_base.a;
+	ALPHA_SCISSOR_THRESHOLD = alpha_scissor;
 #endif
 }
