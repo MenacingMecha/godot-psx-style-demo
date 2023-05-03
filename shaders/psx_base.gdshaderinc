@@ -1,6 +1,6 @@
 render_mode LIT, cull_disabled, shadows_disabled, DEPTH, BLEND;
 
-uniform float precision_multiplier : hint_range(0.0, 1.0) = 1.0;
+global uniform float precision_multiplier : hint_range(0.0, 1.0) = 1.0;
 uniform vec4 modulate_color : source_color = vec4(1.0);
 
 #ifndef NO_TEXTURE
