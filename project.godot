@@ -58,3 +58,10 @@ quality/shading/force_blinn_over_ggx=true
 quality/filters/anisotropic_filter_level=1
 quality/subsurface_scattering/quality=0
 quality/subsurface_scattering/weight_samples=false
+
+[shader_globals]
+
+precision_multiplier={
+"type": "float",
+"value": 1.0
+}
