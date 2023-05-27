@@ -4,14 +4,14 @@ importer="wavefront_obj"
 importer_version=1
 type="Mesh"
 uid="uid://cbvn8fwufde7c"
-path="res://.godot/imported/bevel-box.obj-28a5573e1a1eca6adbca83c44a86e0b5.mesh"
+path="res://.godot/imported/bevel-box.obj-8bc0646b681fdba047bc3bd4214e3c5f.mesh"
 
 [deps]
 
-files=["res://.godot/imported/bevel-box.obj-28a5573e1a1eca6adbca83c44a86e0b5.mesh"]
+files=["res://.godot/imported/bevel-box.obj-8bc0646b681fdba047bc3bd4214e3c5f.mesh"]
 
-source_file="res://world/box_metal/bevel-box.obj"
-dest_files=["res://.godot/imported/bevel-box.obj-28a5573e1a1eca6adbca83c44a86e0b5.mesh", "res://.godot/imported/bevel-box.obj-28a5573e1a1eca6adbca83c44a86e0b5.mesh"]
+source_file="res://addons/godot-psx-style-demo/world/box_metal/bevel-box.obj"
+dest_files=["res://.godot/imported/bevel-box.obj-8bc0646b681fdba047bc3bd4214e3c5f.mesh", "res://.godot/imported/bevel-box.obj-8bc0646b681fdba047bc3bd4214e3c5f.mesh"]
 
 [params]
 
