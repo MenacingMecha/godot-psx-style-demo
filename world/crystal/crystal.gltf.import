@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dj10wq2snt5nf"
-path="res://.godot/imported/crystal.gltf-1151cbaf688b9ff8fcb4eb75510df8c9.scn"
+path="res://.godot/imported/crystal.gltf-fe678eea26d38b79e90bc246baa445be.scn"
 
 [deps]
 
-source_file="res://addons/godot-psx-style-demo/world/crystal/crystal.gltf"
-dest_files=["res://.godot/imported/crystal.gltf-1151cbaf688b9ff8fcb4eb75510df8c9.scn"]
+source_file="res://addons/godot-psx-style/world/crystal/crystal.gltf"
+dest_files=["res://.godot/imported/crystal.gltf-fe678eea26d38b79e90bc246baa445be.scn"]
 
 [params]
 

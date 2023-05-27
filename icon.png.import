@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b2o6eugnb81a6"
-path.s3tc="res://.godot/imported/icon.png-07a36f14d31cfe0ff757f37828a11c67.s3tc.ctex"
+path.s3tc="res://.godot/imported/icon.png-3fc1183e48739779c6fdd5e4a97d32c5.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/godot-psx-style-demo/icon.png"
-dest_files=["res://.godot/imported/icon.png-07a36f14d31cfe0ff757f37828a11c67.s3tc.ctex"]
+source_file="res://addons/godot-psx-style/icon.png"
+dest_files=["res://.godot/imported/icon.png-3fc1183e48739779c6fdd5e4a97d32c5.s3tc.ctex"]
 
 [params]
 

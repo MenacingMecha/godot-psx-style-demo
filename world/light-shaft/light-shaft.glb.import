@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://kaf86vv454ad"
-path="res://.godot/imported/light-shaft.glb-0dc7eba49f248e3a752683dc59c41355.scn"
+path="res://.godot/imported/light-shaft.glb-a10ad11d29fb1eecb9b8418e4dfb743e.scn"
 
 [deps]
 
-source_file="res://addons/godot-psx-style-demo/world/light-shaft/light-shaft.glb"
-dest_files=["res://.godot/imported/light-shaft.glb-0dc7eba49f248e3a752683dc59c41355.scn"]
+source_file="res://addons/godot-psx-style/world/light-shaft/light-shaft.glb"
+dest_files=["res://.godot/imported/light-shaft.glb-a10ad11d29fb1eecb9b8418e4dfb743e.scn"]
 
 [params]
 
