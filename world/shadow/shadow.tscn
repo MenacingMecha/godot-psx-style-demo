@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://world/shadow/shadow_mat.tres" type="Material" id=1]
-[ext_resource path="res://world/shadow/shadow.gd" type="Script" id=2]
+[ext_resource path="res://addons/godot-psx-style/world/shadow/shadow_mat.tres" type="Material" id=1]
+[ext_resource path="res://addons/godot-psx-style/world/shadow/shadow.gd" type="Script" id=2]
 
 [sub_resource type="PlaneMesh" id=1]
 material = ExtResource( 1 )

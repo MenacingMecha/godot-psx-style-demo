@@ -1,6 +1,6 @@
 extends Node3D
 
-const SpatialSinPan := preload("res://world/spatial_sin_pan.gd")
+const SpatialSinPan := preload("res://addons/godot-psx-style/world/spatial_sin_pan.gd")
 
 const SCALE_DISTANCE := 0.125
 const DEFAULT_SCALE := Vector3.ONE * 0.775

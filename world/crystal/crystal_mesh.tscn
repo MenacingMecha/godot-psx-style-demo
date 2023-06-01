@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://k0jtpj0fkkrv"]
 
-[ext_resource type="Material" uid="uid://hy0eu287pcxj" path="res://world/crystal/crystal_spire_mat.tres" id="1"]
-[ext_resource type="Material" uid="uid://t5h4im7t6mey" path="res://world/crystal/crystal_ground_mat.tres" id="2"]
-[ext_resource type="PackedScene" uid="uid://dj10wq2snt5nf" path="res://world/crystal/crystal.gltf" id="3"]
+[ext_resource type="Material" uid="uid://hy0eu287pcxj" path="res://addons/godot-psx-style/world/crystal/crystal_spire_mat.tres" id="1"]
+[ext_resource type="Material" uid="uid://t5h4im7t6mey" path="res://addons/godot-psx-style/world/crystal/crystal_ground_mat.tres" id="2"]
+[ext_resource type="PackedScene" uid="uid://dj10wq2snt5nf" path="res://addons/godot-psx-style/world/crystal/crystal.gltf" id="3"]
 
 [node name="crystal" instance=ExtResource("3")]
 
