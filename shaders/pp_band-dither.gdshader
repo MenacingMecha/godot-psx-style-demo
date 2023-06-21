@@ -1,5 +1,5 @@
-#pragma disable_preprocessor
 shader_type canvas_item;
+#pragma disable_preprocessor
 // originally based on https://github.com/WittyCognomen/godot-psx-shaders-demo/blob/master/shaders/psx_dither_post.shader
 
 uniform sampler2D dither_tex: hint_default_white, repeat_enable, filter_nearest;
