@@ -23,6 +23,15 @@ Floor texture (available under CC-0): https://stealthix.itch.io/rpg-nature-tiles
 - Space: Toggle camera and object movement
 - R: Reset scene
 
+## Usage
+### Brand new projects
+For brand new projects, I would reccomend duplicating this project and playing around with things from there.
+
+### Existing projects
+1. Add the contents of `shaders/` to your project.
+2. Add the `precision_multiplier` as a `float` shader global in Project Settings.
+4. Configure a Dither/Banding viewport shader, using the demo project as reference.
+
 ## Tips for best results
 
 - Use very low poly models
