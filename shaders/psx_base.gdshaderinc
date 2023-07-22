@@ -1,6 +1,7 @@
 render_mode LIT, CULL, shadows_disabled, DEPTH, BLEND, specular_disabled;
 
 global uniform float precision_multiplier : hint_range(0.0, 1.0) = 1.0;
+global uniform float warping_multiplier : hint_range(0.0, 1.0) = 1.0;
 uniform vec4 modulate_color : source_color = vec4(1.0);
 
 #ifndef NO_TEXTURE
@@ -52,7 +53,7 @@ void vertex()
 #endif
 
 	POSITION = get_snapped_pos(PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0));  // snap position to grid
-	POSITION /= abs(POSITION.w);  // discard depth for affine mapping
+	POSITION = mix(POSITION, POSITION / abs(POSITION.w), warping_multiplier);  // discard depth for affine mapping
 
 #ifdef ALPHA_SCISSOR
 	if (y_billboard)
