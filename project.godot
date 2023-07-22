@@ -15,7 +15,7 @@ config/description="Demo project featuring a collection of PS1 style shaders and
 (MIT License)
 https://github.com/MenacingMecha/godot-psx-style-demo/"
 run/main_scene="res://post_process/pp_stack.tscn"
-config/features=PackedStringArray("4.0")
+config/features=PackedStringArray("4.1")
 run/max_fps=24
 config/icon="res://readme-assets/screenshot.png"
 
@@ -24,8 +24,8 @@ config/icon="res://readme-assets/screenshot.png"
 window/size/viewport_width=960
 window/size/viewport_height=720
 window/size/resizable=false
-window/vsync/vsync_mode=0
 window/stretch/mode="viewport"
+window/vsync/vsync_mode=0
 window/size/width=960
 window/size/height=720
 
@@ -62,6 +62,10 @@ quality/subsurface_scattering/weight_samples=false
 [shader_globals]
 
 precision_multiplier={
+"type": "float",
+"value": 1.0
+}
+warping_multiplier={
 "type": "float",
 "value": 1.0
 }
