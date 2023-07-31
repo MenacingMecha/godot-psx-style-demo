@@ -18,6 +18,12 @@ Originally based on: https://github.com/marmitoTH/godot-psx-shaders
 
 Floor texture (available under CC-0): https://stealthix.itch.io/rpg-nature-tileset
 
+## Design Goals
+These shaders are focused on having as few parameters as possible to achieve the desired effect of recreating (most of) the PS1's rendering quirks.
+This is to aid accessibility by way of reducing the amount of things the user has to understand and configure.
+
+However, this is at the cost of customizability; there are fewer parameters to highly tweak how the shaders look versus other projects.
+
 ## Demo Controls
 
 - Space: Toggle camera and object movement
