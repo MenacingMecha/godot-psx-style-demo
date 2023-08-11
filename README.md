@@ -57,6 +57,10 @@ For brand new projects, I would reccomend duplicating this project and playing a
 
 ## Changes from v1.x
 
+### Major version change
+This version is for Godot 4.x only.
+Please refer to the v1.x branch for Godot 3.x support.
+
 ### Fog
 
 Godot 4.0 changed how environmental fog worked, the key part being the removal of the "start distance" and "end distance" properties.
