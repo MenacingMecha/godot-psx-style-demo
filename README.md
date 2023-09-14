@@ -35,7 +35,7 @@ For brand new projects, I would reccomend duplicating this project and playing a
 
 ### Existing projects
 1. Add the contents of `shaders/` to your project.
-2. Add the `precision_multiplier` as a `float` shader global in Project Settings.
+2. Add the `precision_multiplier` as a `float` shader global in Project Settings, ensuring it's value is minimum 0 (non-inclusive), and maximum 1 (inclusive).
 4. Configure a Dither/Banding viewport shader, using the demo project as reference.
 
 ## Tips for best results
