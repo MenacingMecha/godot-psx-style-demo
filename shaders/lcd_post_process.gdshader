@@ -1,5 +1,5 @@
-#pragma disable_preprocessor
 shader_type canvas_item;
+#pragma disable_preprocessor
 
 uniform bool enabled = true;
 uniform float lcd_opacity = 0.5;

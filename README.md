@@ -18,10 +18,25 @@ Originally based on: https://github.com/marmitoTH/godot-psx-shaders
 
 Floor texture (available under CC-0): https://stealthix.itch.io/rpg-nature-tileset
 
+## Design Goals
+These shaders are focused on having as few parameters as possible to achieve the desired effect of recreating (most of) the PS1's rendering quirks.
+This is to aid accessibility by way of reducing the amount of things the user has to understand and configure.
+
+However, this is at the cost of customizability; there are fewer parameters to highly tweak how the shaders look versus other projects.
+
 ## Demo Controls
 
 - Space: Toggle camera and object movement
 - R: Reset scene
+
+## Usage
+### Brand new projects
+For brand new projects, I would reccomend duplicating this project and playing around with things from there.
+
+### Existing projects
+1. Add the contents of `shaders/` to your project.
+2. Add the `precision_multiplier` as a `float` shader global in Project Settings, ensuring it's value is minimum 0 (non-inclusive), and maximum 1 (inclusive).
+4. Configure a Dither/Banding viewport shader, using the demo project as reference.
 
 ## Tips for best results
 
@@ -41,6 +56,10 @@ Floor texture (available under CC-0): https://stealthix.itch.io/rpg-nature-tiles
 - Prefer additive blending to transparent blending
 
 ## Changes from v1.x
+
+### Major version change
+This version is for Godot 4.x only.
+Please refer to the v1.x branch for Godot 3.x support.
 
 ### Fog
 

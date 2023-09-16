@@ -1,5 +1,5 @@
-#pragma disable_preprocessor
 shader_type canvas_item;
+#pragma disable_preprocessor
 
 uniform vec2 blur_scale = vec2(0.5, 0.5);
 uniform float blur_samples = 50.0;
