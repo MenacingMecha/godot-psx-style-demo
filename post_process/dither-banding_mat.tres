@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://dr52yj2jvqaa7"]
 
-[ext_resource type="Shader" path="res://shaders/pp_band-dither.gdshader" id="1_lqq5h"]
-[ext_resource type="Texture2D" uid="uid://b0ub3tqjyw46f" path="res://shaders/psxdither.png" id="2_6of7q"]
+[ext_resource type="Shader" path="res://addons/godot-psx-style/shaders/pp_band-dither.gdshader" id="1_lqq5h"]
+[ext_resource type="Texture2D" uid="uid://b0ub3tqjyw46f" path="res://addons/godot-psx-style/shaders/psxdither.png" id="2_6of7q"]
 
 [resource]
 shader = ExtResource("1_lqq5h")

@@ -3,30 +3,29 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b0ub3tqjyw46f"
-path.s3tc="res://.godot/imported/psxdither.png-6c00fd8f19411080f93d281ca7da7716.s3tc.ctex"
+path="res://.godot/imported/psxdither.png-cd11bfeeb82bdfcdb5edb9501f2f31ba.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://shaders/psxdither.png"
-dest_files=["res://.godot/imported/psxdither.png-6c00fd8f19411080f93d281ca7da7716.s3tc.ctex"]
+source_file="res://addons/godot-psx-style/shaders/psxdither.png"
+dest_files=["res://.godot/imported/psxdither.png-cd11bfeeb82bdfcdb5edb9501f2f31ba.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=3
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
-roughness/mode=0
+roughness/mode=1
 roughness/src_normal=""
-process/fix_alpha_border=true
+process/fix_alpha_border=false
 process/premult_alpha=false
 process/normal_map_invert_y=false
 process/hdr_as_srgb=false

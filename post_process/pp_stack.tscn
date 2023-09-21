@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://cs8d3xn2towo"]
 
-[ext_resource type="Material" uid="uid://b6irksunrvdek" path="res://post_process/blur-post-process_mat.tres" id="1_3emcg"]
-[ext_resource type="Material" uid="uid://bni0eo5gi5ho4" path="res://post_process/lcd-overlay_mat.tres" id="2_0v7s0"]
-[ext_resource type="Shader" path="res://shaders/pp_band-dither.gdshader" id="3_rkbcs"]
-[ext_resource type="Texture2D" uid="uid://b0ub3tqjyw46f" path="res://shaders/psxdither.png" id="4_05ih0"]
-[ext_resource type="PackedScene" uid="uid://c1xno4bm2dlyj" path="res://world/world.tscn" id="5_i4o5h"]
+[ext_resource type="Material" uid="uid://b6irksunrvdek" path="res://addons/godot-psx-style/post_process/blur-post-process_mat.tres" id="1_3emcg"]
+[ext_resource type="Material" uid="uid://bni0eo5gi5ho4" path="res://addons/godot-psx-style/post_process/lcd-overlay_mat.tres" id="2_0v7s0"]
+[ext_resource type="Shader" path="res://addons/godot-psx-style/shaders/pp_band-dither.gdshader" id="3_rkbcs"]
+[ext_resource type="Texture2D" uid="uid://b0ub3tqjyw46f" path="res://addons/godot-psx-style/shaders/psxdither.png" id="4_05ih0"]
+[ext_resource type="PackedScene" uid="uid://c1xno4bm2dlyj" path="res://addons/godot-psx-style/world/world.tscn" id="5_i4o5h"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m5nvn"]
 render_priority = 0
